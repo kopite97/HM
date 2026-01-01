@@ -115,9 +115,39 @@ public class AdventurerFactory : Singleton<AdventurerFactory>
         SetNatures(newAdv, data);
         DistributeStats(newAdv, data, totalPot, age);
         
+        // [테스트용 스킬 부여 로직]
+        // 나중에는 ClassData.MainSkillID를 참조하게 바꿀 것입니다.
+        int skillIdToLearn = 0;
+    
+        if (classID == 1001) skillIdToLearn = 1001; // 전사 -> 강격
+        else if (classID == 1002) skillIdToLearn = 3001; // 마법사 -> 화염구
+        else skillIdToLearn = 2003; // 그 외 -> 단검 투척(예시)
+
+        if (DataManager.Instance.SkillDict.TryGetValue(skillIdToLearn, out SkillData skillData))
+        {
+            // 스킬 습득 (기본 1레벨)
+            newAdv.LearnSkill(skillData, 1);
+            Debug.Log($"[Factory] {newAdv.Name}에게 스킬 부여 완료: {skillData.NameKR}");
+        }
+        else
+        {
+            Debug.LogWarning($"[Factory] 스킬 ID {skillIdToLearn}를 찾을 수 없습니다.");
+        }
+
+        // 스킬 습득 후 포지션 분석
+        newAdv.AnalyzePreferredPosition(DataManager.Instance.DefenseWeight);
         return newAdv;
     }
-    
+
+    private SkillRange GetJobMainRange(int classID)
+    {
+        // 일단은 임시로.. 
+        // 추후에 SKillData에서 가져올 예정
+        if (classID == 1001) return SkillRange.Short; // 전사
+        if (classID == 1002) return SkillRange.Long;  // 마법사
+        return SkillRange.Medium;
+    }
+
     void DistributeStats(Adventurer adv, ClassData data, int totalPot, int age)
     {
         // 1. 해당 직업의 가중치 데이터 가져오기

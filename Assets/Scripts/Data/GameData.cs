@@ -9,7 +9,6 @@ using System.Collections.Generic;
 public class ClassData
 {
     public int ID;
-    // CSV 컬럼명인 Name_KR, Name_EN 등에 맞춰 언더바(_) 추가
     public string Name_KR;
     public string Name_EN;
     public string Desc_KR;
@@ -20,7 +19,7 @@ public class ClassData
     public int W_Valor, W_Composure, W_Focus, W_Judgment, W_Resolve, W_Insight, W_Awareness, W_Command;
     public int W_Arms, W_Archery, W_Sorcery, W_Faith, W_Subtlety, W_Guarding;
     
-    // 성격 가중치 (CSV 컬럼명과 일치 확인됨)
+    // 성격 가중치 
     public int W_Nature_Duty, W_Nature_Discord, W_Nature_Patience, W_Nature_Ambition;
     public int W_Nature_Greed, W_Nature_Cunning, W_Nature_Arrogance, W_Nature_Stubborn;
     public int W_Nature_Honor, W_Nature_Loyalty;
@@ -55,18 +54,26 @@ public class SkillData
 {
     public int ID;
     public string NameKR;
-    public string NameEN;
-    public string Type; // ACTIVE, PASSIVE
-    public string Target;
-    public string Cost_Type;
+    public SkillType Type;
+    public SkillTarget Target;
+    public SkillCostType Cost_Type;
+    public SkillRange Range;
+
+    // 레벨 1 기준 기본값 
     public int Cost_Value;
     public int Cooldown;
-    public string[] Base_Stats; // Body_Might, Tech_Faith...
-    public float[] Power_Coefs; // 1.5, 0.8...
-    public string Effect_Tag;
+    public StatType[] Base_Stats; 
+    public float[] Power_Coefs;   // [예: 1.5, 0.8]
     public float Effect_Value;
+
+    // 레벨당 성장 수치 (성장 설계도) 
+    public int Cost_Growth;          // 레벨당 증가할 코스트 (+2 등)
+    public float Cooldown_Reduction; // 레벨당 감소할 쿨타임 (-0.5 등)
+    public float[] Power_Growth;     // 계수별 성장치 [예: 0.1, 0.05]
+    public float Effect_Growth;      // 효과값 성장치 (+1.0 등)
+    
     public string DescKR;
-    public string DescEN;
+    
 }
 
 // 4. 던전 데이터 (DungeonData)

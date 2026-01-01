@@ -6,60 +6,60 @@ public class GameTester : MonoBehaviour
 {
     void Start()
     {
-        // 데이터가 로드될 시간을 벌기 위해 1초 뒤에 테스트 실행
-        StartCoroutine(TestRoutine());
-    }
-
-    IEnumerator TestRoutine()
-    {
-        Debug.Log("⏳ 데이터 로드 대기 중...");
-        yield return new WaitForSeconds(1.0f); 
-
-        // 데이터가 잘 로드되었는지 확인
-        if (DataManager.Instance.ClassDict.Count == 0)
-        {
-            Debug.LogError("❌ 데이터 로드 실패! URL이나 DataManager를 확인하세요.");
-            yield break;
-        }
-
-        Debug.Log("🧪 --- [모험가 생성 테스트 시작] ---");
-
-        // 1. 전사(1001) 생성 테스트
-        CreateAndLog(1001);
-
-        // 2. 마법사(1002) 생성 테스트
-        CreateAndLog(1002);
+        // 1. 데이터 로드가 완료될 때까지 잠시 대기하거나, 
+        // DataManager.Awake가 먼저 돌았다고 가정하고 실행합니다.
         
-        // 3. 도적(1003) 생성 테스트
-        CreateAndLog(1003);
+        Debug.Log("=== 🧪 스킬 시스템 테스트 시작 ===");
 
+        // 테스트 케이스 1: 전사 생성 (ID: 1001)
+        TestAdventurerCreation(1001, "전사 테스트");
+
+        // 테스트 케이스 2: 마법사 생성 (ID: 1002)
+        TestAdventurerCreation(1002, "마법사 테스트");
     }
 
-    void CreateAndLog(int classId)
+    void TestAdventurerCreation(int classId, string testName)
     {
+        Debug.Log($"\n--- {testName} ---");
+
+        // 1. 모험가 생성 시도
         Adventurer adv = AdventurerFactory.Instance.CreateRandomAdventurer(classId);
 
-        if (adv != null)
+        if (adv == null)
         {
-            Debug.Log($"\n✨ <b>[{adv.PotentialGrade}급] {adv.JobName} {adv.Name}</b> (나이: {adv.Age}세)");
-            Debug.Log($"   💪 <b>잠재력 총합:</b> {adv.TotalPotential} (현재 스탯 총합: {adv.CurrentTotalStat})");
-            
-            // 주요 스탯 몇 개만 로그 찍어보기
-            string statLog = "   📊 <b>주요 스탯:</b> ";
-            StringBuilder sb = new StringBuilder();
-
-            foreach (var val in adv.Stats)
-            {
-                sb.Append(val.Key + ": " + val.Value).Append("\n");
-            }
-            
-            
-            foreach (var nature in adv.Natures)
-            {
-                sb.Append(nature.Key + ": " + nature.Value).Append("\n");
-            }
-            
-            Debug.Log(sb.ToString());
+            Debug.LogError("❌ 모험가 생성 실패! ClassData나 ID를 확인하세요.");
+            return;
         }
+
+        // 2. 기본 정보 출력
+        StringBuilder sb = new StringBuilder();
+        sb.AppendLine($"이름: {adv.Name} (직업: {adv.JobName})");
+        sb.AppendLine($"방어 점수: {adv.DefenseScore} / 선호 포지션: <color=yellow>{adv.PreferredPosition}</color>");
+
+        // 3. 스킬 정보 검증
+        if (adv.Skills.Count > 0)
+        {
+            sb.AppendLine($"\n[보유 스킬 목록 - 총 {adv.Skills.Count}개]");
+            
+            foreach (var skill in adv.Skills)
+            {
+                // LearnedSkill의 프로퍼티가 제대로 계산되는지 확인
+                sb.AppendLine($"🔹 <b>{skill.Data.NameKR}</b> (Lv.{skill.Level})");
+                sb.AppendLine($"   - 타입: {skill.Data.Type} / 사거리: {skill.Data.Range}");
+                sb.AppendLine($"   - 현재 코스트: {skill.CurrentCost} (기본: {skill.Data.Cost_Value})");
+                sb.AppendLine($"   - 현재 쿨타임: {skill.CurrentCooldown}s (기본: {skill.Data.Cooldown}s)");
+                
+                // 계수 배열 출력 확인
+                float[] coefs = skill.GetCurrentPowerCoefs();
+                string coefStr = string.Join(", ", coefs);
+                sb.AppendLine($"   - 현재 계수: [{coefStr}]");
+            }
+        }
+        else
+        {
+            sb.AppendLine("❌ 보유한 스킬이 없습니다.");
+        }
+
+        Debug.Log(sb.ToString());
     }
 }

@@ -28,9 +28,9 @@ public class SheetImporter : EditorWindow
         }
 
         DownloadCSV(URL_CLASS, savePath + "ClassData.csv");
-        DownloadCSV(URL_MONSTER, savePath + "Monster.csv");
-        DownloadCSV(URL_SKILL, savePath + "Skill.csv");
-        DownloadCSV(URL_DUNGEON, savePath + "Dungeon.csv");
+        DownloadCSV(URL_MONSTER, savePath + "MonsterData.csv");
+        DownloadCSV(URL_SKILL, savePath + "SkillData.csv");
+        DownloadCSV(URL_DUNGEON, savePath + "DungeonData.csv");
         
         AssetDatabase.Refresh();
         Debug.Log("✅ 모든 데이터 다운로드 완료!");

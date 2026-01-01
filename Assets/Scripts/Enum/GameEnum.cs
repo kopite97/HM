@@ -39,9 +39,10 @@ public enum MonsterDefenseType
 public enum PartyPosition
 {
     None, // 미배정
-    Frontline, // 전위
-    Midline, // 중위
-    Backline // 후위 
+    Vanguard, // 전위
+    Midguard, // 중위
+    Rearguard, // 후위 
+    All
 }
 
 public enum AdventurerDefenseType
@@ -50,4 +51,53 @@ public enum AdventurerDefenseType
     Evasion,
     Magical,
     Divine
+}
+
+public enum SkillRange
+{
+    Short,
+    Medium,
+    Long
+}
+
+public enum SkillType
+{
+    ACTIVE,
+    PASSIVE
+}
+
+public enum SkillTarget
+{
+    ENEMY_SINGLE,
+    ENEMY_AREA,
+    ENEMY_ALL,
+    ENEMY_RANDOM,
+    
+    ALLY_SINGLE,
+    ALLY_AREA,
+    ALLY_ALL,
+    ALLY_RANDOM,
+    
+    SELF
+}
+
+public enum SkillCostType
+{
+    NONE,
+    STAMINA,
+    MANA
+}
+
+public enum EffectTag
+{
+    NONE,
+    STUN,
+    AGGRO_RESET,
+    AGGRO_UP,
+    KNOCKBACK,
+    IGNORE_DEF,
+    MORALE_DOWN,
+    STAU_AOE,
+    HEAL,
+    DMG_ABSORB
 }
