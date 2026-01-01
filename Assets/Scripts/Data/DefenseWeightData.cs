@@ -8,13 +8,14 @@ public struct StatWeight
     [Range(0f,5f)] public float multiplier; // 0~5배수
 }
 
-[CreateAssetMenu(fileName = "GameBalanceData", menuName = "Game/Balance Data")]
-public class GameBalanceData : ScriptableObject
+[CreateAssetMenu(fileName = "DefenseWeightData", menuName = "Game/Combat/DefenseWeightData")]
+public class DefenseWeightData : ScriptableObject
 {
     [Header("방어 점수 가중치")] 
     public List<StatWeight> PhysicalDefenseWeights; 
     public List<StatWeight> EvasionDefenseWeights;
     public List<StatWeight> MagicalDefenseWeights;
+    public List<StatWeight> DivineDefenseWeights;
 
     public float CalculateScore(Dictionary<StatType, int> stats, List<StatWeight> weights)
     {

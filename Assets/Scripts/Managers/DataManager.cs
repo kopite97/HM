@@ -1,72 +1,62 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
+using System.Reflection; // 리플렉션 사용을 위해 필요
 
 public class DataManager : Singleton<DataManager>
 {
-    public static DataManager Instance;
-    
-    public Dictionary<int,ClassData> ClassDict = new Dictionary<int,ClassData>();
+    public Dictionary<int, ClassData> ClassDict = new Dictionary<int, ClassData>();
+    [Header("Game Settings")] public DefenseWeightData DefenseWeight;
 
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-        LoadClassData();
-    }
-    
+    private void Awake() => LoadClassData();
+
     private void LoadClassData()
     {
-        // Resources/Data/ClassData.csv 파일을 텍스트로 읽어옴
         TextAsset textAsset = Resources.Load<TextAsset>("Data/ClassData");
-        if (textAsset == null)
+        if (textAsset == null) return;
+
+        // 1. 줄바꿈 기준 분리
+        string[] lines = textAsset.text.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+        if (lines.Length < 2) return;
+
+        // 2. 헤더(첫 줄) 분석: 컬럼명과 인덱스 매핑
+        string[] headers = lines[0].Split(',');
+        Dictionary<string, int> headerMap = new Dictionary<string, int>();
+        for (int i = 0; i < headers.Length; i++)
         {
-            Debug.LogError("❌ ClassData.csv 파일을 찾을 수 없습니다. [Tools] 메뉴에서 다운로드 하세요.");
-            return;
+            headerMap[headers[i].Trim()] = i;
         }
 
-        string[] lines = textAsset.text.Split('\n');
+        // 3. 데이터 파싱
+        FieldInfo[] fields = typeof(ClassData).GetFields(BindingFlags.Public | BindingFlags.Instance);
 
         for (int i = 1; i < lines.Length; i++)
         {
-            string line = lines[i].Trim();
-            if (string.IsNullOrEmpty(line))
+            string[] row = lines[i].Split(',');
+            ClassData data = new ClassData();
+
+            foreach (FieldInfo field in fields)
             {
-                continue;
+                // 클래스 필드 이름이 CSV 헤더에 있는지 확인
+                if (headerMap.TryGetValue(field.Name, out int index))
+                {
+                    if (index >= row.Length) continue;
+                    
+                    string value = row[index].Trim();
+                    
+                    // 타입에 맞게 자동으로 값 대입
+                    if (field.FieldType == typeof(int))
+                        field.SetValue(data, int.Parse(value));
+                    else if (field.FieldType == typeof(string))
+                        field.SetValue(data, value);
+                    else if (field.FieldType == typeof(float))
+                        field.SetValue(data, float.Parse(value));
+                }
             }
             
-            string[] row = line.Split(',');
-            
-            
-            ClassData data = new  ClassData();
-
-            try
-            {
-                data.ID = int.Parse(row[0]);
-                data.NameKR = row[1];
-                data.NameEN = row[2];
-                data.DescKR = row[3];
-                data.DescEN = row[4];
-
-                // 가중치 매핑
-                data.W_Might = int.Parse(row[5]);
-                data.W_Endurance = int.Parse(row[6]);
-
-
+            if (!ClassDict.ContainsKey(data.ID))
                 ClassDict.Add(data.ID, data);
-            }
-            catch (System.Exception e)
-            {
-                Debug.LogError($"[파싱 에러] {i}번째 줄: {e.Message}");
-            }
-            Debug.Log($"✅ ClassData 로드 완료! 총 {ClassDict.Count}개 직업.");
         }
+        Debug.Log($"✅ [자동 파싱 완료] 총 {ClassDict.Count}개 직업 로드.");
     }
 }

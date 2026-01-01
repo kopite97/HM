@@ -148,6 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73454eea8e0e41029610fca39c2e7fce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DataManager
+  DefenseWeight: {fileID: 11400000, guid: b4b751b81bf6b654ab56837538fbb19d, type: 2}
 --- !u!4 &86498563
 Transform:
   m_ObjectHideFlags: 0

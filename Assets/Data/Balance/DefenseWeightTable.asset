@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3d3b71820f941f5b697aa3955df244d, type: 3}
+  m_Name: DefenseWeightTable
+  m_EditorClassIdentifier: Assembly-CSharp::GameBalanceData
+  PhysicalDefenseWeights:
+  - stat: 0
+    multiplier: 2
+  - stat: 1
+    multiplier: 1.5
+  - stat: 3
+    multiplier: 1
+  - stat: 5
+    multiplier: 1.5
+  - stat: 6
+    multiplier: 2
+  - stat: 7
+    multiplier: 0.5
+  - stat: 8
+    multiplier: 1.1
+  - stat: 9
+    multiplier: 0.5
+  - stat: 10
+    multiplier: 0.6
+  - stat: 11
+    multiplier: 0.3
+  - stat: 12
+    multiplier: 0.8
+  - stat: 14
+    multiplier: 0.9
+  - stat: 18
+    multiplier: 0.9
+  - stat: 19
+    multiplier: 1.5
+  EvasionDefenseWeights:
+  - stat: 2
+    multiplier: 2.8
+  - stat: 4
+    multiplier: 2.2
+  - stat: 7
+    multiplier: 1
+  - stat: 8
+    multiplier: 0.9
+  - stat: 9
+    multiplier: 0.7
+  - stat: 11
+    multiplier: 0.7
+  - stat: 12
+    multiplier: 1
+  - stat: 18
+    multiplier: 2.2
+  - stat: 19
+    multiplier: 1
+  MagicalDefenseWeights:
+  - stat: 2
+    multiplier: 1
+  - stat: 7
+    multiplier: 1.5
+  - stat: 8
+    multiplier: 1.8
+  - stat: 9
+    multiplier: 1.3
+  - stat: 11
+    multiplier: 1.8
+  - stat: 12
+    multiplier: 1.3
+  - stat: 16
+    multiplier: 2.5
+  - stat: 18
+    multiplier: 1.8
+  - stat: 19
+    multiplier: 1
+  DivineDefenseWeights:
+  - stat: 1
+    multiplier: 1.5
+  - stat: 3
+    multiplier: 1.2
+  - stat: 5
+    multiplier: 1
+  - stat: 6
+    multiplier: 1
+  - stat: 8
+    multiplier: 1.2
+  - stat: 10
+    multiplier: 1.8
+  - stat: 17
+    multiplier: 2.5
+  - stat: 14
+    multiplier: 0.5
+  - stat: 19
+    multiplier: 1.6

@@ -43,3 +43,11 @@ public enum PartyPosition
     Midline, // 중위
     Backline // 후위 
 }
+
+public enum AdventurerDefenseType
+{
+    Physical,
+    Evasion,
+    Magical,
+    Divine
+}

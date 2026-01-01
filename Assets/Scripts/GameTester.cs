@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Text;
 
 public class GameTester : MonoBehaviour
 {
@@ -31,6 +32,7 @@ public class GameTester : MonoBehaviour
         
         // 3. 도적(1003) 생성 테스트
         CreateAndLog(1003);
+
     }
 
     void CreateAndLog(int classId)
@@ -44,26 +46,20 @@ public class GameTester : MonoBehaviour
             
             // 주요 스탯 몇 개만 로그 찍어보기
             string statLog = "   📊 <b>주요 스탯:</b> ";
-            if(adv.Stats.ContainsKey(StatType.Might)) statLog += $"완력 {adv.Stats[StatType.Might]}, ";
-            if(adv.Stats.ContainsKey(StatType.Sorcery)) statLog += $"마법 {adv.Stats[StatType.Sorcery]}, ";
-            if(adv.Stats.ContainsKey(StatType.Mobility)) statLog += $"기동 {adv.Stats[StatType.Mobility]},";
-            Debug.Log(statLog);
+            StringBuilder sb = new StringBuilder();
 
-            // 성격 로그 찍어보기
-            string natureLog = "   🧠 <b>성격:</b> ";
-            int max = 0;
-            NatureType natureType = NatureType.Ambition;
-            foreach (var nature in adv.Natures)
+            foreach (var val in adv.Stats)
             {
-                // 제일 높은 값만 한번...
-                if (nature.Value > max)
-                {
-                    max = nature.Value;
-                    natureType = nature.Key;
-                }
+                sb.Append(val.Key + ": " + val.Value).Append("\n");
             }
             
-            Debug.Log(natureLog+$"{natureType} : {max}");
+            
+            foreach (var nature in adv.Natures)
+            {
+                sb.Append(nature.Key + ": " + nature.Value).Append("\n");
+            }
+            
+            Debug.Log(sb.ToString());
         }
     }
 }
