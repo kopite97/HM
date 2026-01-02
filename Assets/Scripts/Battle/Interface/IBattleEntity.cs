@@ -7,6 +7,7 @@ public interface IBattleEntity
     
     float GetMaxHp();
     float GetBaseStat(StatType type);
+    float GetNatureStat(NatureType type);
     float GetDefenseScore();
     List<int> GetSkillIDs();
 }

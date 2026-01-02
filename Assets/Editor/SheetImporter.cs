@@ -17,6 +17,10 @@ public class SheetImporter : EditorWindow
     private const string URL_DUNGEON =
         "https://docs.google.com/spreadsheets/d/e/2PACX-1vQv8IjFrxELQTifAV8Qd24b3B5YlwHxdQeD70hpH_w8GhyBdybj-kEpnwxH_8Duzu8X1qZ75Dm9PjI1/pub?output=csv";
 
+    private const string URL_RESISTANCECONFIG =
+        "https://docs.google.com/spreadsheets/d/e/2PACX-1vTWUHVHOsfnW3evfFUBXmuMa2kwedMrIRBNEBNm1lvqAnr21YBaEUqVqaaXmMXATCmxI7FrLp2QJcK1/pub?output=csv";
+    
+    
     [MenuItem("Tools/Update Data (Google Sheets)")]
     public static void UpdateData()
     {
@@ -31,6 +35,7 @@ public class SheetImporter : EditorWindow
         DownloadCSV(URL_MONSTER, savePath + "MonsterData.csv");
         DownloadCSV(URL_SKILL, savePath + "SkillData.csv");
         DownloadCSV(URL_DUNGEON, savePath + "DungeonData.csv");
+        DownloadCSV(URL_RESISTANCECONFIG,savePath +"ResistanceConfig.csv");
         
         AssetDatabase.Refresh();
         Debug.Log("✅ 모든 데이터 다운로드 완료!");

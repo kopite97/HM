@@ -26,11 +26,10 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
                 if (_instance == null)
                 {
                     // 1. 씬에 이미 존재하는지 찾기
-                    _instance = (T)FindObjectOfType(typeof(T));
+                    _instance = (T)FindFirstObjectByType(typeof(T));
 
-                    if (FindObjectsOfType(typeof(T)).Length > 1)
+                    if (FindFirstObjectByType(typeof(T)))
                     {
-                        Debug.LogError($"[Singleton] '{typeof(T)}' 가 씬에 2개 이상 존재합니다.");
                         return _instance;
                     }
 

@@ -226,4 +226,9 @@ public class Adventurer
             PreferredPosition = (defScore >= 180f) ? PartyPosition.All : PartyPosition.Rearguard;
         }
     }
+
+    public float GetNature(NatureType type)
+    {
+        return Natures.TryGetValue(type, out var val) ? val : 0;
+    }
 }

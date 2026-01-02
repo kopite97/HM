@@ -29,6 +29,11 @@ public class MonsterAdapter : IBattleEntity
         return _mon.BaseStats.TryGetValue(type, out int val) ? val : 0;
     }
 
+    public float GetNatureStat(NatureType type)
+    {
+        return _mon.GetNature(type);
+    }
+
     public float GetDefenseScore()
     {
         return _mon.DefenseScore;

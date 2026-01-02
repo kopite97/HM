@@ -88,7 +88,7 @@ public class BattleManager : Singleton<BattleManager>
             // 1. 행동 순서 결정 (속도 = Reflex + Mobility 등)
             // 내림차순 정렬 (빠른 놈이 먼저)
             _allUnits = _allUnits
-                .OrderByDescending(u => u.GetStat(StatType.Reflex) + u.GetStat(StatType.Mobility))
+                .OrderByDescending(u => u.GetStat(StatType.Body_Reflex) + u.GetStat(StatType.Body_Mobility))
                 .ToList();
 
             // 2. 각 유닛 행동 처리
@@ -189,7 +189,7 @@ public class BattleManager : Singleton<BattleManager>
             // [기본 규칙] 전열(Vanguard) 우선 타격
             var livingEnemies = enemies.Where(u => !u.IsDead).ToList();
             
-            var vanguards = livingEnemies.Where(u => u.Position == PartyPosition.Vanguard).ToList();
+            var vanguards = livingEnemies.Where(u => u.CurrentPosition == PartyPosition.Vanguard).ToList();
             if (vanguards.Count > 0)
             {
                 // 전열 중 랜덤 혹은 가장 약한 적
@@ -203,18 +203,36 @@ public class BattleManager : Singleton<BattleManager>
 
     private void PerformAction(BattleUnit actor, BattleUnit target, LearnedSkill skill)
     {
-        // 1. 계산 (BattleCalculator 위임)
-        float damage = BattleCalculator.CalculateDamage(actor, target, skill, CurrentEnv);
+ 
+        // ------------데미지 파이프 라인 ------------
+        
+        // 파이프 라인 호출
+        DamageContext result = DamagePipeline.Process(actor, target, skill, CurrentEnv);
 
-        // 2. 적용
-        target.TakeDamage(damage);
-
-        // 3. 로그 출력 (나중에 UI 이벤트로 연결)
-        Debug.Log($"💥 <b>{actor.Name}</b>의 [{skill.Data.NameKR}]! -> <b>{target.Name}</b>에게 <color=red>{damage}</color> 피해! (남은 HP: {target.CurrentHP})");
-
-        if (target.IsDead)
+        if (result.IsHeal)
         {
-            Debug.Log($"💀 {target.Name} 사망!");
+            target.Heal(result.FinalResult);
+        }
+        else
+        {
+            target.TakeDamage(result.FinalResult);
+        }
+        
+        // --------이페긑 파이프라인--------------- 
+        // 힐이나 단순 공격이 아니라 효과가 있는 경우만 실행
+        if (skill.Data.Effect_Tag != EffectTag.NONE && skill.Data.Effect_Tag != EffectTag.HEAL)
+        {
+            EffectContext effResult = EffectPipeline.Process(actor, target, skill);
+
+            if (effResult.IsSuccess)
+            {
+                // TODO 상태부여
+                // target.ApplyEffect 
+            }
+            else
+            {
+                // 상태이상 저항
+            }
         }
     }
 

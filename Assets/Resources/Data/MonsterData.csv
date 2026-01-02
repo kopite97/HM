@@ -1,6 +1,6 @@
-ID,Name_KR,Name_EN,Level,HP,Atk_Power,Def_Power,Speed,Type_Atk,Type_Def,AI_Pattern,Skill_IDs,Drop_Gold_Min,Drop_Gold_Max,Drop_Exp
-2001,숲 고블린,Forest Goblin,1,40,8,2,15,ATK_PHYSICAL,DEF_EVASION,AI_RANDOM,3001,5,10,10
-2002,오크 전사,Orc Warrior,3,120,25,10,5,ATK_HEAVY,DEF_HEAVY,AI_FRONT,3005,30,50,40
-2003,그림자 늑대,Shadow Wolf,5,80,30,5,20,ATK_ASSASSIN,DEF_BEAST,AI_WEAK,3006,40,60,55
-2004,유령,Ghost,7,60,35,99,10,ATK_MENTAL,DEF_GHOST,AI_AGGRO,3007,50,80,70
-2005,오우거,Ogre,10,500,80,30,3,ATK_SIEGE,DEF_HEAVY,AI_AGGRO,3005/3008,200,300,500
+ID,NameKR,Level,MaxHP,DefenseScore,SkillIDs_Str,Desc,Might,Endurance,Reflex,Poise,Mobility,Vitality,Valor,Composure,Focus,Judgment,Resolve,Insight,Awareness,Command,Arms,Archery,Sorcery,Faith,Subtlety,Guarding,Duty,Discord,Patience,Ambition,Greed,Cunning,Arrogance,Stubborn,Honor,Loyalty
+1,고블린,1,100,50,1001;2003,약하지만 빠른 숲의 몬스터,15,10,20,5,20,10,5,5,10,5,5,5,15,0,5,5,0,0,20,5,5,15,5,10,20,20,10,5,0,5
+2,오크 전사,3,350,120,1001;1002;1003,강력한 힘의 오크,40,35,10,30,15,40,30,10,10,5,20,5,10,10,35,5,0,5,5,30,15,20,5,15,10,5,20,20,10,15
+3,스켈레톤 궁수,2,120,30,5001,원거리 공격을 하는 해골,10,10,25,10,15,0,5,20,30,10,20,10,20,0,5,35,0,0,15,5,20,0,20,0,0,5,0,20,0,20
+4,다크 슬라임,5,500,80,2002;3001,물리 내성이 강한 슬라임,20,50,5,40,5,50,0,20,0,0,30,0,5,0,0,0,20,0,30,40,0,10,20,0,20,5,5,20,0,0
+5,리치,10,800,150,3001;3002;3003;4003,언데드의 군주,10,20,15,30,20,0,10,40,50,40,40,50,30,50,5,0,80,0,20,10,10,30,20,50,20,40,50,20,5,0

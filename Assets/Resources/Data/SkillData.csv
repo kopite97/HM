@@ -1,23 +1,23 @@
-ID,NameKR,Type,Target,Cost_Type,Cost_Value,Cost_Growth,Cooldown,Cooldown_Reduction,Base_Stats,Power_Coefs,Power_Growth,Effect_Tag,Effect_Value,Effect_Growth,Range,DescKR
-1001,강격,ACTIVE,ENEMY_SINGLE,STAMINA,10,2,5,0.2,Might,1.5,0.1,NONE,0,0,Short,무기에 체중을 실어 적 하나를 강하게 내려칩니다.
-1002,방패 밀치기,ACTIVE,ENEMY_SINGLE,STAMINA,15,2,12,0.5,Endurance,1.2,0.1,STUN,1.5,0.1,Short,방패로 적을 가격하여 피해를 입히고 잠시 기절시킵니다.
-1003,전투의 함성,ACTIVE,ENEMY_ALL,STAMINA,20,3,15,0.5,Might,0.5,0.05,AGGRO_UP,50,5,Short,우렁찬 함성을 질러 적 전체의 주의를 자신에게 끕니다.
-1004,회전 베기,ACTIVE,ENEMY_AREA,STAMINA,25,4,10,0.4,Might;Arms,1.0;0.5,0.1;0.05,NONE,0,0,Short,몸을 회전시켜 주변의 적들을 동시에 공격합니다.
-1005,강철 피부,PASSIVE,SELF,NONE,0,0,0,0,Endurance,0.2,0.02,NONE,0,0,Short,피부를 단련하여 영구적으로 물리 방어력을 높입니다.
-2001,급소 찌르기,ACTIVE,ENEMY_SINGLE,STAMINA,12,2,8,0.3,Mobility,2.2,0.15,IGNORE_DEF,0,0,Short,적의 약점을 정확히 찔러 방어력을 무시하는 피해를 줍니다.
-2002,독 바르기,ACTIVE,SELF,MANA,10,1,20,1,Mobility,0,0,NONE,0,0,Short,무기에 독을 발라 다음 공격 시 추가 효과를 부여합니다.
-2003,단검 투척,ACTIVE,ENEMY_SINGLE,STAMINA,8,1,4,0.1,Mobility,1,0.1,NONE,0,0,Medium,품에서 단검을 꺼내 중거리의 적에게 던집니다.
-2004,그림자 망토,PASSIVE,SELF,NONE,0,0,0,0,Mobility,0.15,0.02,AGGRO_RESET,0,0,Short,적들의 시선에서 벗어나 어그로 수치를 낮게 유지합니다.
-3001,화염구,ACTIVE,ENEMY_SINGLE,MANA,15,3,6,0.2,Sorcery,2.5,0.2,NONE,0,0,Long,거대한 화염 덩어리를 날려 적을 태워버립니다.
-3002,연쇄 번개,ACTIVE,ENEMY_AREA,MANA,25,5,12,0.5,Sorcery,1.8,0.15,STUN,0.5,0.1,Long,여러 적을 타고 흐르는 전류를 방출합니다. 확률적으로 경직을 줍니다.
-3003,마력 보호막,ACTIVE,SELF,MANA,30,5,25,1,Sorcery,1.5,0.1,DMG_ABSORB,100,20,Long,마력으로 보호막을 형성하여 들어오는 피해를 흡수합니다.
-3004,명상,ACTIVE,SELF,NONE,0,0,20,1,Sorcery,0,0,NONE,0,0,Medium,전투 중 잠시 집중하여 소모된 마나를 회복합니다.
-3005,고대 지식,PASSIVE,SELF,NONE,0,0,0,0,Sorcery,0.3,0.03,NONE,0,0,Long,마법에 대한 이해도를 높여 마법 공격력을 영구적으로 강화합니다.
-4001,치유의 빛,ACTIVE,ALLY_SINGLE,MANA,20,3,8,0.4,Faith,2.5,0.2,HEAL,0,0,Long,신성한 힘으로 아군 한 명의 상처를 치유합니다.
-4002,성역,ACTIVE,ALLY_ALL,MANA,40,6,20,1,Faith,1.5,0.1,HEAL,0,0,Long,넓은 범위를 축복하여 아군 전체의 체력을 서서히 회복시킵니다.
-4003,심판,ACTIVE,ENEMY_SINGLE,MANA,25,4,10,0.5,Might;Faith,1.0;1.2,0.1;0.1,STUN,1,0.1,Medium,신성한 망치를 소환하여 적을 타격하고 기절시킵니다.
-4004,축복,ACTIVE,ALLY_SINGLE,MANA,15,2,15,0.5,Faith,0.5,0.05,MORALE_DOWN,0,0,Long,아군의 능력을 일시적으로 강화합니다. (효과는 구현 필요)
-4005,신의 가호,PASSIVE,SELF,NONE,0,0,0,0,Faith,0.1,0.01,NONE,0,0,Long,신의 보호를 받아 해로운 효과에 대한 저항력을 높입니다.
-5001,정밀 사격,ACTIVE,ENEMY_SINGLE,STAMINA,15,2,10,0.5,Archery,3,0.25,NONE,0,0,Long,먼 거리에서 적의 급소를 노려 치명적인 피해를 입힙니다.
-5002,화살 비,ACTIVE,ENEMY_AREA,STAMINA,25,4,15,0.8,Archery,1.2,0.1,NONE,0,0,Long,하늘을 뒤덮는 화살을 쏘아 넓은 지역을 초토화합니다.
-5003,밀쳐내기,ACTIVE,ENEMY_SINGLE,STAMINA,10,2,8,0.3,Might;Poise,0.5;0.5,0.05;0.05,KNOCKBACK,3,0,Medium,근접한 적을 발로 차거나 강하게 쏘아 거리를 벌립니다.
+ID,NameKR,Type,Damage_Type,Target,Cost_Type,Cost_Value,Cost_Growth,Cooldown,Cooldown_Reduction,Base_Stats,Power_Coefs,Power_Growth,Effect_Tag,Effect_Value,Effect_Growth,Range,DescKR
+1001,강격,ACTIVE,Physical,ENEMY_SINGLE,STAMINA,10,2,5,0.2,Body_Might,1.5,0.1,NONE,0,0,Short,무기에 체중을 실어 적 하나를 강하게 내려칩니다.
+1002,방패 밀치기,ACTIVE,Physical,ENEMY_SINGLE,STAMINA,15,2,12,0.5,Body_Endurance,1.2,0.1,STUN,1.5,0.1,Short,방패로 적을 가격하여 피해를 입히고 잠시 기절시킵니다.
+1003,전투의 함성,ACTIVE,Physical,ENEMY_ALL,STAMINA,20,3,15,0.5,Body_Might,0.5,0.05,AGGRO_UP,50,5,Short,우렁찬 함성을 질러 적 전체의 주의를 자신에게 끕니다.
+1004,회전 베기,ACTIVE,Physical,ENEMY_AREA,STAMINA,25,4,10,0.4,Body_Might;Tech_Arms,1.0;0.5,0.1;0.05,NONE,0,0,Short,몸을 회전시켜 주변의 적들을 동시에 공격합니다.
+1005,강철 피부,PASSIVE,None,SELF,NONE,0,0,0,0,Body_Endurance,0.2,0.02,NONE,0,0,Short,피부를 단련하여 영구적으로 물리 방어력을 높입니다.
+2001,급소 찌르기,ACTIVE,Physical,ENEMY_SINGLE,STAMINA,12,2,8,0.3,Body_Mobility,2.2,0.15,IGNORE_DEF,0,0,Short,적의 약점을 정확히 찔러 방어력을 무시하는 피해를 줍니다.
+2002,독 바르기,ACTIVE,Physical,SELF,MANA,10,1,20,1,Body_Mobility,0,0,NONE,0,0,Short,무기에 독을 발라 다음 공격 시 추가 효과를 부여합니다.
+2003,단검 투척,ACTIVE,Physical,ENEMY_SINGLE,STAMINA,8,1,4,0.1,Body_Mobility,1,0.1,NONE,0,0,Medium,품에서 단검을 꺼내 중거리의 적에게 던집니다.
+2004,그림자 망토,PASSIVE,None,SELF,NONE,0,0,0,0,Body_Mobility,0.15,0.02,AGGRO_RESET,0,0,Short,적들의 시선에서 벗어나 어그로 수치를 낮게 유지합니다.
+3001,화염구,ACTIVE,Magical,ENEMY_SINGLE,MANA,15,3,6,0.2,Tech_Sorcery,2.5,0.2,NONE,0,0,Long,거대한 화염 덩어리를 날려 적을 태워버립니다.
+3002,연쇄 번개,ACTIVE,Magical,ENEMY_AREA,MANA,25,5,12,0.5,Tech_Sorcery,1.8,0.15,STUN,0.5,0.1,Long,여러 적을 타고 흐르는 전류를 방출합니다. 확률적으로 경직을 줍니다.
+3003,마력 보호막,ACTIVE,None,SELF,MANA,30,5,25,1,Tech_Sorcery,1.5,0.1,DMG_ABSORB,100,20,Long,마력으로 보호막을 형성하여 들어오는 피해를 흡수합니다.
+3004,명상,ACTIVE,None,SELF,NONE,0,0,20,1,Tech_Sorcery,0,0,NONE,0,0,Medium,전투 중 잠시 집중하여 소모된 마나를 회복합니다.
+3005,고대 지식,PASSIVE,None,SELF,NONE,0,0,0,0,Tech_Sorcery,0.3,0.03,NONE,0,0,Long,마법에 대한 이해도를 높여 마법 공격력을 영구적으로 강화합니다.
+4001,치유의 빛,ACTIVE,None,ALLY_SINGLE,MANA,20,3,8,0.4,Tech_Faith,2.5,0.2,HEAL,0,0,Long,신성한 힘으로 아군 한 명의 상처를 치유합니다.
+4002,성역,ACTIVE,None,ALLY_ALL,MANA,40,6,20,1,Tech_Faith,1.5,0.1,HEAL,0,0,Long,넓은 범위를 축복하여 아군 전체의 체력을 서서히 회복시킵니다.
+4003,심판,ACTIVE,Holy,ENEMY_SINGLE,MANA,25,4,10,0.5,Body_Might;Tech_Faith,1.0;1.2,0.1;0.1,STUN,1,0.1,Medium,신성한 망치를 소환하여 적을 타격하고 기절시킵니다.
+4004,축복,ACTIVE,None,ALLY_SINGLE,MANA,15,2,15,0.5,Tech_Faith,0.5,0.05,MORALE_DOWN,0,0,Long,아군의 능력을 일시적으로 강화합니다. (효과는 구현 필요)
+4005,신의 가호,PASSIVE,None,SELF,NONE,0,0,0,0,Tech_Faith,0.1,0.01,NONE,0,0,Long,신의 보호를 받아 해로운 효과에 대한 저항력을 높입니다.
+5001,정밀 사격,ACTIVE,Physical,ENEMY_SINGLE,STAMINA,15,2,10,0.5,Tech_Archery,3,0.25,NONE,0,0,Long,먼 거리에서 적의 급소를 노려 치명적인 피해를 입힙니다.
+5002,화살 비,ACTIVE,Physical,ENEMY_AREA,STAMINA,25,4,15,0.8,Tech_Archery,1.2,0.1,NONE,0,0,Long,하늘을 뒤덮는 화살을 쏘아 넓은 지역을 초토화합니다.
+5003,밀쳐내기,ACTIVE,Physical,ENEMY_SINGLE,STAMINA,10,2,8,0.3,Body_Might;Body_Poise,0.5;0.5,0.05;0.05,KNOCKBACK,3,0,Medium,근접한 적을 발로 차거나 강하게 쏘아 거리를 벌립니다.

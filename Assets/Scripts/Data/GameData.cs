@@ -5,7 +5,7 @@ using System.Collections.Generic;
 // 1. 직업 데이터 (ClassData)
 using System.Collections.Generic;
 
-[System.Serializable]
+[System.Serializable] 
 public class ClassData
 {
     public int ID;
@@ -15,9 +15,9 @@ public class ClassData
     public string Desc_EN;
     
     // 가중치 (Weights)
-    public int W_Might, W_Endurance, W_Reflex, W_Poise, W_Mobility, W_Vitality;
-    public int W_Valor, W_Composure, W_Focus, W_Judgment, W_Resolve, W_Insight, W_Awareness, W_Command;
-    public int W_Arms, W_Archery, W_Sorcery, W_Faith, W_Subtlety, W_Guarding;
+    public int W_Body_Might, W_Body_Endurance, W_Body_Reflex, W_Body_Poise, W_Body_Mobility, W_Body_Vitality;
+    public int W_Mind_Valor, W_Mind_Composure, W_Mind_Focus, W_Mind_Judgment, W_Mind_Resolve, W_Mind_Insight, W_Mind_Awareness, W_Mind_Command;
+    public int W_Tech_Arms, W_Tech_Archery, W_Tech_Sorcery, W_Tech_Faith, W_Tech_Subtlety, W_Tech_Guarding;
     
     // 성격 가중치 
     public int W_Nature_Duty, W_Nature_Discord, W_Nature_Patience, W_Nature_Ambition;
@@ -57,6 +57,8 @@ public class SkillData
     public SkillTarget Target;
     public SkillCostType Cost_Type;
     public SkillRange Range;
+    public EffectTag Effect_Tag;
+    public DamageType Damage_Type;
 
     // 레벨 1 기준 기본값 
     public int Cost_Value;
@@ -92,4 +94,9 @@ public class DungeonData
     public int Reward_Gold_Max;
     public string DescKR;
     public string DescEN;
+}
+
+public class ResistanceConfig
+{
+    
 }

@@ -1,19 +1,27 @@
 ﻿using System;
-using UnityEngine;
 using System.Collections.Generic;
-using System.Reflection; // 리플렉션 사용을 위해 필요
+using System.Reflection;
+using UnityEngine;
+
+// 리플렉션 사용을 위해 필요
 
 public class DataManager : Singleton<DataManager>
 {
     public Dictionary<int, ClassData> ClassDict = new Dictionary<int, ClassData>();
     [Header("Game Settings")] public DefenseWeightData DefenseWeight;
-    
-    public Dictionary<int,SkillData> SkillDict = new Dictionary<int, SkillData>();
+    public Dictionary<int, SkillData> SkillDict = new Dictionary<int, SkillData>();
     public Dictionary<int, MonsterData> MonsterDict = new Dictionary<int, MonsterData>();
+
+    public Dictionary<DamageType, List<ResistanceFactor>> ResistanceRules =
+        new Dictionary<DamageType, List<ResistanceFactor>>();
+
+
     private void Awake()
     {
         LoadClassData();
         LoadSkillData();
+        LoadMonsterData();
+        LoadResistanceData();
     }
 
     private void LoadClassData()
@@ -47,9 +55,9 @@ public class DataManager : Singleton<DataManager>
                 if (headerMap.TryGetValue(field.Name, out int index))
                 {
                     if (index >= row.Length) continue;
-                    
+
                     string value = row[index].Trim();
-                    
+
                     // 타입에 맞게 자동으로 값 대입
                     if (field.FieldType == typeof(int))
                         field.SetValue(data, int.Parse(value));
@@ -59,19 +67,20 @@ public class DataManager : Singleton<DataManager>
                         field.SetValue(data, float.Parse(value));
                 }
             }
-            
+
             if (!ClassDict.ContainsKey(data.ID))
                 ClassDict.Add(data.ID, data);
         }
+
         Debug.Log($"✅ [자동 파싱 완료] 총 {ClassDict.Count}개 직업 로드.");
     }
 
-private void LoadSkillData()
+    private void LoadSkillData()
     {
         SkillDict.Clear();
-        
+
         TextAsset textAsset = Resources.Load<TextAsset>("Data/SkillData");
-        if (textAsset == null) 
+        if (textAsset == null)
         {
             Debug.LogError("SkillData CSV 파일을 찾을 수 없습니다.");
             return;
@@ -107,7 +116,7 @@ private void LoadSkillData()
                     if (index >= row.Length) continue;
 
                     string value = row[index].Trim();
-                    
+
                     // 빈 값인 경우 기본값 유지
                     if (string.IsNullOrEmpty(value)) continue;
 
@@ -144,7 +153,7 @@ private void LoadSkillData()
                             {
                                 // float[] 파싱
                                 float[] floatArr = new float[arrayValues.Length];
-                                for(int k=0; k<arrayValues.Length; k++) floatArr[k] = float.Parse(arrayValues[k]);
+                                for (int k = 0; k < arrayValues.Length; k++) floatArr[k] = float.Parse(arrayValues[k]);
                                 field.SetValue(data, floatArr);
                             }
                             else if (elementType.IsEnum)
@@ -152,11 +161,12 @@ private void LoadSkillData()
                                 // Enum[] 파싱 (StatType[] 등)
                                 // 리플렉션으로 해당 Enum 타입의 배열 인스턴스 생성
                                 Array enumArr = Array.CreateInstance(elementType, arrayValues.Length);
-                                for(int k=0; k<arrayValues.Length; k++)
+                                for (int k = 0; k < arrayValues.Length; k++)
                                 {
                                     object enumVal = Enum.Parse(elementType, arrayValues[k].Trim());
                                     enumArr.SetValue(enumVal, k);
                                 }
+
                                 field.SetValue(data, enumArr);
                             }
                             // 필요하다면 int[] 등 추가
@@ -180,7 +190,7 @@ private void LoadSkillData()
         Debug.Log($"✅ [SkillData] 총 {SkillDict.Count}개 스킬 로드 완료.");
     }
 
-private void LoadMonsterData()
+    private void LoadMonsterData()
     {
         MonsterDict.Clear();
         TextAsset textAsset = Resources.Load<TextAsset>("Data/MonsterData");
@@ -192,7 +202,7 @@ private void LoadMonsterData()
 
         // 2. 헤더 분석 (어떤 열이 어떤 스탯인지 미리 파악)
         string[] headers = lines[0].Split(',');
-        
+
         // 헤더 인덱스 매핑 정보 생성
         var statColumnMap = new Dictionary<int, StatType>();
         var natureColumnMap = new Dictionary<int, NatureType>();
@@ -248,7 +258,10 @@ private void LoadMonsterData()
                         else if (field.FieldType == typeof(float)) field.SetValue(data, float.Parse(value));
                         else if (field.FieldType == typeof(string)) field.SetValue(data, value);
                     }
-                    catch { Debug.LogError($"[MonsterData] 필드 파싱 에러: {field.Name} 값={value}"); }
+                    catch
+                    {
+                        Debug.LogError($"[MonsterData] 필드 파싱 에러: {field.Name} 값={value}");
+                    }
                 }
                 // 3-2. 스탯 딕셔너리 매핑
                 else if (statColumnMap.TryGetValue(col, out StatType sType))
@@ -269,7 +282,7 @@ private void LoadMonsterData()
             {
                 foreach (var idStr in data.SkillIDs_Str.Split(';'))
                 {
-                    if (int.TryParse(idStr.Trim(), out int skillId)) 
+                    if (int.TryParse(idStr.Trim(), out int skillId))
                         data.SkillIDs.Add(skillId);
                 }
             }
@@ -280,5 +293,62 @@ private void LoadMonsterData()
         }
 
         Debug.Log($"✅ [MonsterData] 총 {MonsterDict.Count}개 몬스터 로드 완료 (컬럼형).");
+    }
+
+    public void LoadResistanceData()
+    {
+        ResistanceRules.Clear();
+
+        TextAsset textAsset = Resources.Load<TextAsset>("Data/ResistanceConfig");
+        if (textAsset == null)
+        {
+            Debug.LogError("ResistnaceConfig.csv 파일을 찾을 수 없습니다.");
+            return;
+        }
+
+        string[] lines = textAsset.text.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+
+        for (int i = 1; i < lines.Length; i++)
+        {
+            string[] row = lines[i].Split(',');
+            if (row.Length < 3) continue;
+
+            // 1. DamageType 파싱
+            if (!Enum.TryParse(row[0].Trim(), out DamageType dmgType)) continue;
+
+            // 2. Stat/Nature 파싱
+            string typeName = row[1].Trim();
+            float coef = float.Parse(row[2].Trim());
+
+            ResistanceFactor factor = new ResistanceFactor();
+            factor.Coefficient = coef;
+
+            if (typeName.StartsWith("Nature_"))
+            {
+                // 성격 파싱
+                if (Enum.TryParse(typeName, out NatureType nType))
+                {
+                    factor.IsNature = true;
+                    factor.Nature = nType;
+                }
+            }
+            else
+            {
+                if (Enum.TryParse(typeName, out StatType sType))
+                {
+                    factor.IsNature = false;
+                    factor.Stat = sType;
+                }
+            }
+
+            if (!ResistanceRules.ContainsKey(dmgType))
+            {
+                ResistanceRules[dmgType] = new List<ResistanceFactor>();
+            }
+
+            ResistanceRules[dmgType].Add(factor);
+        }
+
+        Debug.Log($"✅ [ResistanceData] 총 {ResistanceRules.Count}개 속성의 저항 공식 로드 완료.");
     }
 }

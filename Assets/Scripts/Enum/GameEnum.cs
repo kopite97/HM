@@ -1,19 +1,22 @@
 ﻿// 전투 스탯 (ClassData의 W_Might -> Might)
+
+using System;
+
 public enum StatType
 {
     // [Body]
-    Might, Endurance, Reflex, Poise, Mobility, Vitality,
+    Body_Might, Body_Endurance, Body_Reflex, Body_Poise, Body_Mobility, Body_Vitality,
     // [Mind]
-    Valor, Composure, Focus, Judgment, Resolve, Insight, Awareness, Command,
+    Mind_Valor, Mind_Composure, Mind_Focus, Mind_Judgment, Mind_Resolve, Mind_Insight, Mind_Awareness, Mind_Command,
     // [Tech]
-    Arms, Archery, Sorcery, Faith, Subtlety, Guarding
+    Tech_Arms, Tech_Archery, Tech_Sorcery, Tech_Faith, Tech_Subtlety, Tech_Guarding
 }
 
 // 성격 (ClassData의 W_Nature_Duty -> Duty)
 public enum NatureType
 {
-    Duty, Discord, Patience, Ambition, Greed, 
-    Cunning, Arrogance, Stubborn, Honor, Loyalty
+    Nature_Duty, Nature_Discord, Nature_Patience, Nature_Ambition, Nature_Greed, 
+    Nature_Cunning, Nature_Arrogance, Nature_Stubborn, Nature_Honor, Nature_Loyalty
 }
 
 
@@ -119,4 +122,16 @@ public enum BattleState
     InBattle,
     Win,
     Lose
+}
+
+[System.Flags]
+public enum DamageType
+{
+    None        = 0,
+    Physical    = 1 << 0, //1
+    Magical     = 1 << 1, //2
+    Mental      = 1 << 2, //4
+    Cursed      = 1 << 3, //8
+    Holy        = 1 << 4, //16
+    True        = 1 << 5, //32
 }

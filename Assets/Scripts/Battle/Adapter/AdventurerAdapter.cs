@@ -17,10 +17,10 @@ public class AdventurerAdapter : IBattleEntity
 
     public float GetMaxHp()
     {
-        float might = _adv.GetStat(StatType.Might);
-        float endurance = _adv.GetStat(StatType.Endurance);
-        float vitality = _adv.GetStat(StatType.Vitality);
-        float poise =  _adv.GetStat(StatType.Poise);
+        float might = _adv.GetStat(StatType.Body_Might);
+        float endurance = _adv.GetStat(StatType.Body_Endurance);
+        float vitality = _adv.GetStat(StatType.Body_Vitality);
+        float poise =  _adv.GetStat(StatType.Body_Poise);
 
         return (might * 15f) + (endurance * 20f) + (vitality * 100f) + (poise * 20f);
     }
@@ -28,6 +28,11 @@ public class AdventurerAdapter : IBattleEntity
     public float GetBaseStat(StatType type)
     {
         return  _adv.GetStat(type);
+    }
+    
+    public float GetNatureStat(NatureType type)
+    {
+        return _adv.GetNature(type);
     }
 
     public float GetDefenseScore()

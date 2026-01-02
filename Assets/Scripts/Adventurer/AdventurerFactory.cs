@@ -35,7 +35,7 @@ public class AdventurerFactory : Singleton<AdventurerFactory>
         _natureWeightCache.Clear();
         
         FieldInfo[] allFields = typeof(ClassData).GetFields(BindingFlags.Public | BindingFlags.Instance);
-        
+        Debug.Log($"[Factory] ClassData에서 발견된 전체 필드 수: {allFields.Length}");
         // 필드와 Enum 타입을 매핑하여 저장할 리스트
         var statFieldMap = new List<(FieldInfo field, StatType type)>();
         var natureFieldMap = new List<(FieldInfo field, NatureType type)>();
@@ -45,8 +45,8 @@ public class AdventurerFactory : Singleton<AdventurerFactory>
             // 1. 성격 필드 파싱 (W_Nature_...)
             if (field.Name.StartsWith("W_Nature_"))
             {
-                string enumName = field.Name.Substring(9); // "W_Nature_" 제거
-                if (Enum.TryParse(enumName, out NatureType nType))
+                string enumName = field.Name.Substring(2); // "W_" 제거
+                if (Enum.TryParse(enumName,true, out NatureType nType))
                 {
                     natureFieldMap.Add((field, nType));
                 }
@@ -59,7 +59,7 @@ public class AdventurerFactory : Singleton<AdventurerFactory>
             else if (field.Name.StartsWith("W_"))
             {
                 string enumName = field.Name.Substring(2); // "W_" 제거
-                if (Enum.TryParse(enumName, out StatType sType))
+                if (Enum.TryParse(enumName,true, out StatType sType))
                 {
                     statFieldMap.Add((field, sType));
                 }
@@ -92,6 +92,7 @@ public class AdventurerFactory : Singleton<AdventurerFactory>
         }
 
         _isInitialized = true;
+        
         Debug.Log($"[Factory] Enum 기반 캐싱 완료! (스탯 종류: {statFieldMap.Count}, 성격 종류: {natureFieldMap.Count})");
     }
 
@@ -250,10 +251,10 @@ public class AdventurerFactory : Singleton<AdventurerFactory>
 
         // Enum 키를 사용하여 안전하게 접근
         int spiritSum = 0;
-        spiritSum += GetNatureValue(adv, NatureType.Duty);
-        spiritSum += GetNatureValue(adv, NatureType.Patience);
-        spiritSum += GetNatureValue(adv, NatureType.Ambition);
-        spiritSum += GetNatureValue(adv, NatureType.Honor);
+        spiritSum += GetNatureValue(adv, NatureType.Nature_Duty);
+        spiritSum += GetNatureValue(adv, NatureType.Nature_Patience);
+        spiritSum += GetNatureValue(adv, NatureType.Nature_Ambition);
+        spiritSum += GetNatureValue(adv, NatureType.Nature_Honor);
 
         // 한계 돌파 로직
         if (spiritSum >= LIMIT_BREAK_HIGH_THRESHOLD) limit = Mathf.RoundToInt(limit * LIMIT_BREAK_HIGH_MULTIPLIER); // 15%

@@ -1,0 +1,10 @@
+DamageType,StatType,Coefficient
+Magical,Body_Endurance,0.5
+Magical,Body_Poise,1
+Magical,Tech_Sorcery,0.5
+Mental,Mind_Valor,1.5
+Mental,Mind_Composure,1
+Cursed,Mind_Valor,2
+Cursed,Mind_Composure,1
+Physical,Body_Endurance,1
+Physical,Body_Poise,0.5
