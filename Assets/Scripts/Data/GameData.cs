@@ -25,27 +25,26 @@ public class ClassData
     public int W_Nature_Honor, W_Nature_Loyalty;
 }
 
-// Monster, Skill, Dungeon 데이터는 추후 CSV 구조에 맞춰 변수명을 조정하시면 됩니다.
 
 // 2. 몬스터 데이터 (MonsterData)
 [System.Serializable]
 public class MonsterData
 {
+    // --- 기본 정보 (리플렉션으로 자동 매핑) ---
     public int ID;
     public string NameKR;
-    public string NameEN;
     public int Level;
-    public int HP;
-    public int Atk_Power;
-    public int Def_Power;
-    public int Speed;
-    public string Type_Atk; // ENUM으로 변환 가능
-    public string Type_Def;
-    public string AI_Pattern;
-    public List<int> Skill_IDs; // 3001, 3005...
-    public int Drop_Gold_Min;
-    public int Drop_Gold_Max;
-    public int Drop_Exp;
+    public float MaxHP;
+    public float DefenseScore;
+    public string Desc;
+    
+    // (CSV 파싱 전 임시 저장용)
+    public string SkillIDs_Str; 
+    
+    // --- 스탯 & 성격 데이터 저장소 ---
+    public Dictionary<StatType, int> BaseStats = new Dictionary<StatType, int>();
+    public Dictionary<NatureType, int> BaseNatures = new Dictionary<NatureType, int>();
+    public List<int> SkillIDs = new List<int>();
 }
 
 // 3. 스킬 데이터 (SkillData)

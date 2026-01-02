@@ -101,3 +101,22 @@ public enum EffectTag
     HEAL,
     DMG_ABSORB
 }
+
+public enum DungeonTag
+{
+    None,
+    Darkness,   // 어둠: 원거리 효율 감소
+    Swamp,      // 늪지: 민첩성 감소
+    HolyGround, // 성역: 신성 마법 강화
+    Cursed,     // 저주: 회복 효율 감소
+    Narrow      // 좁은길: 광역 공격 효율 감소
+}
+
+public enum BattleState
+{
+    Idle,
+    Setup,
+    InBattle,
+    Win,
+    Lose
+}
