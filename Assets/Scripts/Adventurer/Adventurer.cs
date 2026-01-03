@@ -25,10 +25,10 @@ public class Adventurer
     [SerializeField] private AdventurerDefenseType _cachedDefenseType;
     private bool _isDirtyDefense = true;
     
-    private Dictionary<StatType, int> _stats = new Dictionary<StatType, int>();
-    private Dictionary<NatureType, int> _natures = new Dictionary<NatureType, int>();
-    public IReadOnlyDictionary<StatType, int> Stats => _stats;
-    public IReadOnlyDictionary<NatureType, int> Natures => _natures;
+    private Dictionary<StatType, float> _stats = new Dictionary<StatType, float>();
+    private Dictionary<NatureType, float> _natures = new Dictionary<NatureType, float>();
+    public IReadOnlyDictionary<StatType, float> Stats => _stats;
+    public IReadOnlyDictionary<NatureType, float> Natures => _natures;
 
     public PartyPosition PreferredPosition { get; private set; } = PartyPosition.None;
     public PartyPosition AssignedPosition { get; private set; } = PartyPosition.None;
@@ -39,7 +39,7 @@ public class Adventurer
 
     // [수정] 성장의 기준을 단순 합계가 아닌 '현재 능력치'로 변경
     public bool CanGrow => _currentAbility < TotalPotential;
-    public int CurrentTotalStat => _stats.Values.Sum();
+    public float CurrentTotalStat => _stats.Values.Sum();
     
     // 포지션 잠금
     public bool IsPositionLocked { get; private set; } = false;
@@ -60,9 +60,9 @@ public class Adventurer
             AssignedPosition = position;
     }
     
-    public void SetNature(NatureType type, int value) => _natures[type] = value;
+    public void SetNature(NatureType type, float value) => _natures[type] = value;
 
-    public void SetStat(StatType type, int value)
+    public void SetStat(StatType type, float value)
     {
         if (!_stats.ContainsKey(type)) _stats.Add(type, 0);
         
@@ -98,15 +98,15 @@ public class Adventurer
 
     
     // --- 로직 메서드 ---
-    public int GetStat(StatType type) => _stats.TryGetValue(type, out int val) ? val : 0;
+    public float GetStat(StatType type) => _stats.TryGetValue(type, out float val) ? val : 0;
 
-    public float GetCurrentAbility(Dictionary<int, Dictionary<StatType, int>> weightCache)
+    public float GetCurrentAbility(Dictionary<int, Dictionary<StatType, float>> weightCache)
     {
         if (_isDirtyAbility) UpdateCurrentAbility(weightCache);
         return _currentAbility;
     }
 
-    private void UpdateCurrentAbility(Dictionary<int, Dictionary<StatType, int>> weightCache)
+    private void UpdateCurrentAbility(Dictionary<int, Dictionary<StatType, float>> weightCache)
     {
         if (weightCache == null || !weightCache.TryGetValue(this.JobID, out var jobWeights))
         {
@@ -158,27 +158,7 @@ public class Adventurer
 
         _isDirtyDefense = false;
     }
-
-    /**
-    public void CalculatePreferredPosition(SkillRange mainSkillRange, DefenseWeightData defenseData)
-    {
-        float vanguardThreshold = PartyManager.Instance.GetVanguardThreshold();
-        float defense = GetDefenseScore(defenseData);
-
-        switch (mainSkillRange)
-        {
-            case SkillRange.Short:
-                PreferredPosition = (defense >= vanguardThreshold) ? PartyPosition.Vanguard : PartyPosition.Midguard;
-                break;
-            case SkillRange.Medium:
-                PreferredPosition = (defense >= vanguardThreshold) ? PartyPosition.Vanguard : PartyPosition.Midguard;
-                break;
-            case SkillRange.Long:
-                PreferredPosition = (defense >= vanguardThreshold) ? PartyPosition.All : PartyPosition.Rearguard;
-                break;
-        }
-    }**/
-
+    
     public void LearnSkill(SkillData data, int level = 1)
     {
         if (_skills.Exists(s => s.Data.ID == data.ID)) return;

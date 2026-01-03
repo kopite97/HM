@@ -15,14 +15,14 @@ public class ClassData
     public string Desc_EN;
     
     // 가중치 (Weights)
-    public int W_Body_Might, W_Body_Endurance, W_Body_Reflex, W_Body_Poise, W_Body_Mobility, W_Body_Vitality;
-    public int W_Mind_Valor, W_Mind_Composure, W_Mind_Focus, W_Mind_Judgment, W_Mind_Resolve, W_Mind_Insight, W_Mind_Awareness, W_Mind_Command;
-    public int W_Tech_Arms, W_Tech_Archery, W_Tech_Sorcery, W_Tech_Faith, W_Tech_Subtlety, W_Tech_Guarding;
+    public float W_Body_Might, W_Body_Endurance, W_Body_Reflex, W_Body_Poise, W_Body_Mobility, W_Body_Vitality;
+    public float W_Mind_Valor, W_Mind_Composure, W_Mind_Focus, W_Mind_Judgment, W_Mind_Resolve, W_Mind_Insight, W_Mind_Awareness, W_Mind_Command;
+    public float W_Tech_Arms, W_Tech_Archery, W_Tech_Sorcery, W_Tech_Faith, W_Tech_Subtlety, W_Tech_Guarding;
     
     // 성격 가중치 
-    public int W_Nature_Duty, W_Nature_Discord, W_Nature_Patience, W_Nature_Ambition;
-    public int W_Nature_Greed, W_Nature_Cunning, W_Nature_Arrogance, W_Nature_Stubborn;
-    public int W_Nature_Honor, W_Nature_Loyalty;
+    public float W_Nature_Duty, W_Nature_Discord, W_Nature_Patience, W_Nature_Ambition;
+    public float W_Nature_Greed, W_Nature_Cunning, W_Nature_Arrogance, W_Nature_Stubborn;
+    public float W_Nature_Honor, W_Nature_Loyalty;
 }
 
 
@@ -36,15 +36,45 @@ public class MonsterData
     public int Level;
     public float MaxHP;
     public float DefenseScore;
+
+    public int[] Skill_List;
     public string Desc;
     
-    // (CSV 파싱 전 임시 저장용)
-    public string SkillIDs_Str; 
+    // 스탯
+    public float Body_Might;
+    public float Body_Endurance;
+    public float Body_Reflex;
+    public float Body_Poise;
+    public float Body_Mobility;
+    public float Body_Vitality;
     
-    // --- 스탯 & 성격 데이터 저장소 ---
-    public Dictionary<StatType, int> BaseStats = new Dictionary<StatType, int>();
-    public Dictionary<NatureType, int> BaseNatures = new Dictionary<NatureType, int>();
-    public List<int> SkillIDs = new List<int>();
+    public float Mind_Valor;
+    public float Mind_Composure;
+    public float Mind_Focus;
+    public float Mind_Judgment;
+    public float Mind_Resolve;
+    public float Mind_Insight;
+    public float Mind_Awareness;
+    public float Mind_Command;
+    
+    public float Tech_Arms;
+    public float Tech_Archery;
+    public float Tech_Sorcery;
+    public float Tech_Faith;
+    public float Tech_Subtlety;
+    public float Tech_Guarding;
+    
+    // 성격
+    public float Nature_Duty;
+    public float Nature_Discord;
+    public float Nature_Patience;
+    public float Nature_Ambition;
+    public float Nature_Greed;
+    public float Nature_Cunning;
+    public float Nature_Arrogance;
+    public float Nature_Stubborn;
+    public float Nature_Honor;
+    public float Nature_Loyalty;
 }
 
 // 3. 스킬 데이터 (SkillData)
@@ -57,7 +87,10 @@ public class SkillData
     public SkillTarget Target;
     public SkillCostType Cost_Type;
     public SkillRange Range;
-    public EffectTag Effect_Tag;
+    public SkillProperty SkillProperty;
+    public float Property_Weight;
+    public SkillEffect SkillEffect;
+    public float Effect_Weight;
     public DamageType Damage_Type;
 
     // 레벨 1 기준 기본값 
@@ -65,13 +98,11 @@ public class SkillData
     public int Cooldown;
     public StatType[] Base_Stats; 
     public float[] Power_Coefs;   // [예: 1.5, 0.8]
-    public float Effect_Value;
 
     // 레벨당 성장 수치 (성장 설계도) 
     public int Cost_Growth;          // 레벨당 증가할 코스트 (+2 등)
     public float Cooldown_Reduction; // 레벨당 감소할 쿨타임 (-0.5 등)
     public float[] Power_Growth;     // 계수별 성장치 [예: 0.1, 0.05]
-    public float Effect_Growth;      // 효과값 성장치 (+1.0 등)
     
     public string DescKR;
     
@@ -96,7 +127,30 @@ public class DungeonData
     public string DescEN;
 }
 
-public class ResistanceConfig
+[System.Serializable]
+public class EffectConfigData
 {
-    
+    public int ID;
+    public SkillEffect Effect;
+    public string Name;
+    public StatType[] Hit_Stats;
+    public float[] Hit_Coefs;
+    public StatType[] Resist_Stats;
+    public float[] Resist_Coefs;
+    public float BestChance;
+    public int BaseTurn;
+}
+
+[System.Serializable]
+public class PropertyConfigData
+{
+    public int ID;
+    public SkillProperty Property;
+    public string Name;
+    public StatType[] Hit_Stats;
+    public float[] Hit_Coefs;
+    public StatType[] Resist_Stats;
+    public float[] Resist_Coefs;
+    public string Param_Desc;
+    public string Desc;
 }

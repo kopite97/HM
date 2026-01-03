@@ -5,7 +5,7 @@ public static class EffectPipeline
     public static EffectContext Process(BattleUnit attacker, BattleUnit defender, LearnedSkill skill)
     {
         EffectContext ctx = new EffectContext(attacker, defender, skill);
-        ctx.AddLog($"=== 🌀 상태이상 계산: {skill.Data.Effect_Tag} ===");
+        ctx.AddLog($"=== 🌀 상태이상 계산: {skill.Data.SkillEffect} ===");
 
         // 면역 체크
         CheckImmunity(ctx);

@@ -17,7 +17,7 @@ public class DefenseWeightData : ScriptableObject
     public List<StatWeight> MagicalDefenseWeights;
     public List<StatWeight> DivineDefenseWeights;
 
-    public float CalculateScore(Dictionary<StatType, int> stats, List<StatWeight> weights)
+    public float CalculateScore(Dictionary<StatType, float> stats, List<StatWeight> weights)
     {
         float totalScroe = 0f;
 

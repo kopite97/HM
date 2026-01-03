@@ -1,0 +1,16 @@
+ID,Property,Name,Hit_Stats,Hit_Coefs,Resist_Stats,Resist_Coefs,Param_Desc,Desc
+1001,NONE,없음,None,0,None,0,N/A,아무런 효과가 없습니다.
+1002,HEAL,치유,Tech_Faith,0.5+0.5,None,0,N/A,신성력과 지식으로 생명력을 회복합니다.
+1003,IGNORE_DEF,관통,Tech_Arms+Mind_Insight,0.5+0.5,Tech_Guarding,0.5,N/A,약점을 파악하여 방어력을 무시합니다.
+1004,ALWAYS_CRIT,확정 치명타,Tech_Subtlety,0.5,Mind_Insight,0.5,N/A,치명적인 부위를 정확히 노립니다.
+1005,ALWAYS_HIT,필중,Mind_Focus,0.5,Tech_Subtlety,0.5,N/A,절대 빗나가지 않는 공격을 합니다.
+1006,EXECUTE,처형,Body_Might+Tech_Arms,0.5+0.5,Body_Vitality,0.5,발동 체력 비율,체력이 낮은 적에게 치명적인 피해를 줍니다.
+1007,DRAIN_HP,흡혈,Tech_Sorcery,0.5,Mind_Resolve,0.5,흡수율,적의 생명력을 흡수하여 자신의 것으로 만듭니다.
+1008,RECOIL,반동,None,0,None,0,피해 비율,강력한 힘의 대가로 자신도 피해를 입습니다.
+1009,KNOCKBACK,넉백,Body_Might,0,Body_Poise+Body_Endurance,0.5+0.5,거리,물리적인 힘으로 대상을 뒤로 밀어냅니다.
+1010,PULL,당기기,Body_Might+Tech_Arms,0.5+0.5,Body_Poise,0,거리,대상을 자신의 앞으로 끌어당깁니다.
+1011,SWAP_POS,위치 교체,Tech_Subtlety,0,Mind_Insight,0.5+0.5,N/A,순식간에 대상과 위치를 바꿉니다.
+1012,CLEANSE,정화,Tech_Faith,0,None,0,N/A,아군에게 걸린 해로운 효과를 제거합니다.
+1013,DISPEL,해제,Mind_Composure+Tech_Sorcery,0.5+0.5,Tech_Sorcery,0,N/A,적에게 걸린 이로운 마법을 강제로 해제합니다.
+1014,AGGRO_RESET,어그로 초기화,Tech_Subtlety,0,Mind_Insight,0,N/A,자신을 향한 적들의 적대감을 지웁니다.
+1015,AGGRO_UP,도발(즉발),Mind_Valor,0.5+0.5,Mind_Composure,0,수치,자신을 주목하게 만들어 어그로를 크게 높입니다.

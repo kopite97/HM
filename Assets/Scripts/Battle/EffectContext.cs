@@ -7,7 +7,7 @@ public class EffectContext
     public BattleUnit Attacker;
     public BattleUnit Defender;
     public LearnedSkill Skill;
-    public EffectTag EffectType; // 적용하려는 효과 타입
+    public SkillEffect SkillEffectType; // 적용하려는 효과 타입
     public float BaseChance; // 기본 성공 확률 (0.0 ~ 1.0)
     
     // 계산 변수 
@@ -30,9 +30,9 @@ public class EffectContext
         Attacker = attacker;
         Defender = defender;
         Skill = skill;
-        EffectType = skill.Data.Effect_Tag;
+        SkillEffectType = skill.Data.SkillEffect;
 
-        BaseChance = skill.CurrentEffectValue / 100f;
+        //BaseChance = skill.CurrentEffectValue / 100f;
         // 일단 지속시간은 1턴
         // TODO : coef value를 통한 턴 수 증가 로직 추가 
         Duration = 1;

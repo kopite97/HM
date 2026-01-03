@@ -26,7 +26,7 @@ public class MonsterAdapter : IBattleEntity
 
     public float GetBaseStat(StatType type)
     {
-        return _mon.BaseStats.TryGetValue(type, out int val) ? val : 0;
+        return _mon.Stats.TryGetValue(type, out float val) ? val : 0;
     }
 
     public float GetNatureStat(NatureType type)
@@ -41,6 +41,6 @@ public class MonsterAdapter : IBattleEntity
 
     public List<int> GetSkillIDs()
     {
-        return _mon.SkillIDs;
+        return _mon.Skill_List;
     }
 }

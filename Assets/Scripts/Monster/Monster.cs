@@ -1,25 +1,25 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 public class Monster
 {
-    // 원본 데이터 참조 (Flyweight 패턴: 여러 고블린이 하나의 고블린 데이터를 공유)
-    private MonsterData _data;
+    public int ID { get; private set; }
+    public string Name { get; private set; }
+    public int Level { get; private set; }
+    public float MaxHP { get; private set; }
+    public float DefenseScore { get;private set; }
+    private string Desc;
     
     public PartyPosition StartPosition { get; private set; } // 배치된 위치
-    
-    // 만약 '접두사(강력한)'가 붙거나 해서 이름이 바뀔 수 있다면 별도 변수로 분리 가능
-    public string Name => _data.NameKR; 
-    public int Level => _data.Level;
-    
-    // 몬스터는 성장이 없으므로 데이터의 값을 그대로 반환
-    public float MaxHP => _data.MaxHP;
-    public float DefenseScore => _data.DefenseScore;
-    
-    // 스킬 목록
-    public List<int> SkillIDs => _data.SkillIDs;
-    
-    public IReadOnlyDictionary<StatType, int> BaseStats => _data.BaseStats;
+
+    public List<int> Skill_List =  new List<int>();
+
+    private Dictionary<StatType, float> _stats = new Dictionary<StatType, float>();
+    private Dictionary<NatureType, float> _natures = new Dictionary<NatureType, float>();
+    public IReadOnlyDictionary<StatType, float> Stats => _stats;
+    public IReadOnlyDictionary<NatureType, float> Natures => _natures;
 
     /// <summary>
     /// 생성자
@@ -28,23 +28,71 @@ public class Monster
     /// <param name="position">이 몬스터가 배치될 위치</param>
     public Monster(MonsterData data, PartyPosition position)
     {
-        _data = data;
         StartPosition = position;
+        ID = data.ID;
+        Name = data.NameKR;
+        Level = data.Level;
+        MaxHP = data.MaxHP;
+        
+        DefenseScore = data.DefenseScore;
+        Desc = data.Desc;
+
+        foreach (var skillId in data.Skill_List)
+        {
+            Skill_List.Add(skillId);
+        }
+
+        foreach (StatType type in Enum.GetValues(typeof(StatType)))
+        {
+            if (type == StatType.None) continue;
+            
+            string fieldName = type.ToString();
+            FieldInfo field = typeof(MonsterData).GetField(fieldName);
+
+            if (field != null)
+            {
+                float value = (float)field.GetValue(data);
+                _stats.Add(type, value);
+            }
+            else
+            {
+                Debug.LogWarning($"[Monster Init] MonsterData에 '{fieldName}' 필드가 없습니다.");
+            }
+        }
+        
+        foreach(NatureType type in Enum.GetValues(typeof(NatureType)))
+        {
+            if(type== NatureType.None) continue;
+            
+            string fieldName = type.ToString();
+            FieldInfo field = typeof(MonsterData).GetField(fieldName);
+
+            if (field != null)
+            {
+                float value = (float)field.GetValue(data);
+                _natures.Add(type, value);
+            }
+            else
+            {
+                Debug.LogWarning($"[Monster Init] MonsterData에 '{fieldName}' 필드가 없습니다.");
+            }
+            
+        }
     }
 
     /// <summary>
     /// 특정 스탯 값을 가져옵니다.
     /// </summary>
-    public int GetStat(StatType type)
+    public float GetStat(StatType type)
     {
-        return _data.BaseStats.TryGetValue(type, out int val) ? val : 0;
+        return Stats.TryGetValue(type,out float val) ?  val : 0;
     }
 
     /// <summary>
     /// 성격 값을 가져옵니다. (AI 로직용)
     /// </summary>
-    public int GetNature(NatureType type)
+    public float GetNature(NatureType type)
     {
-        return _data.BaseNatures.TryGetValue(type, out int val) ? val : 0;
+        return Natures.TryGetValue(type, out float val) ? val : 0;
     }
 }

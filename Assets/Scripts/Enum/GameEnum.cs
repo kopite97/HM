@@ -4,6 +4,7 @@ using System;
 
 public enum StatType
 {
+    None,
     // [Body]
     Body_Might, Body_Endurance, Body_Reflex, Body_Poise, Body_Mobility, Body_Vitality,
     // [Mind]
@@ -15,6 +16,7 @@ public enum StatType
 // 성격 (ClassData의 W_Nature_Duty -> Duty)
 public enum NatureType
 {
+    None,
     Nature_Duty, Nature_Discord, Nature_Patience, Nature_Ambition, Nature_Greed, 
     Nature_Cunning, Nature_Arrogance, Nature_Stubborn, Nature_Honor, Nature_Loyalty
 }
@@ -91,18 +93,72 @@ public enum SkillCostType
     MANA
 }
 
-public enum EffectTag
+/// <summary>
+/// 즉발 효과
+/// </summary>
+public enum SkillProperty
 {
     NONE,
-    STUN,
-    AGGRO_RESET,
+    
+    // [계산 보정] - DamagePipeline에서 처리
+    HEAL,             // 데미지 대신 회복 적용
+    IGNORE_DEF,       // 방어 공식 생략 (True Damage)
+    ALWAYS_CRIT,      // 치명타 확률 100%로 고정
+    ALWAYS_HIT,       // 명중률 100% (회피 불가)
+    EXECUTE,          // 체력이 낮으면 데미지 2배 (처형)
+    
+    
+    // [즉발 행동] - BattleManager PerformAction에서 처리
+    DRAIN_HP,         // 데미지의 N% 만큼 시전자 회복 (흡혈)
+    RECOIL,           // 데미지의 N% 만큼 시전자 피해 (반동)
+    
+    // [전장 제어]
+    KNOCKBACK,        // 대상을 후열로 이동
+    PULL,             // 대상을 전열로 이동
+    SWAP_POS,         // 위치 바꿈
+    
+    // [유틸리티]
+    CLEANSE,          // 아군의 '해로운' EffectTag 제거
+    DISPEL,           // 적의 '이로운' EffectTag 제거
+    AGGRO_RESET,      // 시전자의 누적 어그로 초기화
     AGGRO_UP,
-    KNOCKBACK,
-    IGNORE_DEF,
-    MORALE_DOWN,
-    STAU_AOE,
-    HEAL,
-    DMG_ABSORB
+    
+}
+
+/// <summary>
+/// 지속적인 효과
+/// </summary>
+public enum SkillEffect
+{
+    NONE,
+    
+    // [상태 제어 - CC]
+    STUN,           // 기절 (행동 불가)
+    SLEEP,          // 수면 (피격 시 해제)
+    CONFUSION,      // 혼란 (아군 공격 가능)
+    TAUNT,          // 도발 (특정 대상만 공격 강제)
+    FEAR,           // 공포 (스킬 사용 불가)
+    
+    // [지속 피해 - DoT]
+    POISON,         // 독 (체력 비례 피해)
+    BLEED,          // 출혈 (행동 시 피해, 중첩됨)
+    BURN,           // 화상 (피해 + 방어력 감소)
+    
+    // [스탯 변화 - Stat Mod]
+    BUFF_ATK,       // 공격력 증가
+    BUFF_DEF,       // 방어력 증가
+    DEBUFF_ATK,     // 공격력 감소 (Weakness)
+    DEBUFF_DEF,     // 방어력 감소 (Armor Break)
+    SLOW,           // 속도 감소
+    HASTE,          // 속도 증가
+    
+    // [특수 버프]
+    SHIELD,         // 보호막 (체력 대신 소모)
+    IMMORTAL,       // 불사 (체력이 1 아래로 안 내려감)
+    REGEN,           // 재생 (매 턴 회복)
+    
+    // 인챈트
+    ENCHANT_POISON,
 }
 
 public enum DungeonTag

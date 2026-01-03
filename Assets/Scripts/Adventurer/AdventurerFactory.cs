@@ -8,16 +8,16 @@ using Random = UnityEngine.Random;
 public class AdventurerFactory : Singleton<AdventurerFactory>
 {
     // [변경] 캐시 키가 string -> Enum으로 변경됨
-    private Dictionary<int, Dictionary<StatType, int>> _statWeightCache = new Dictionary<int, Dictionary<StatType, int>>();
-    private Dictionary<int, Dictionary<NatureType, int>> _natureWeightCache = new Dictionary<int, Dictionary<NatureType, int>>();
+    private Dictionary<int, Dictionary<StatType, float>> _statWeightCache = new Dictionary<int, Dictionary<StatType, float>>();
+    private Dictionary<int, Dictionary<NatureType, float>> _natureWeightCache = new Dictionary<int, Dictionary<NatureType, float>>();
     
     private bool _isInitialized = false;
     
     // 스탯 하나당 최대치 
-    private const int MAX_STAT_VALUE = 20;
+    private const float MAX_STAT_VALUE = 20;
     
-    private const int LIMIT_BREAK_HIGH_THRESHOLD = 75;
-    private const int LIMIT_BREAK_MID_THRESHOLD = 68;
+    private const float LIMIT_BREAK_HIGH_THRESHOLD = 75;
+    private const float LIMIT_BREAK_MID_THRESHOLD = 68;
     private const float LIMIT_BREAK_HIGH_MULTIPLIER = 1.15f;
     private const float LIMIT_BREAK_MID_MULTIPLIER = 1.05f;
 
@@ -73,19 +73,19 @@ public class AdventurerFactory : Singleton<AdventurerFactory>
             ClassData data = kvp.Value;
             
             // 전투 스탯 캐싱
-            Dictionary<StatType, int> statWeights = new Dictionary<StatType, int>();
+            Dictionary<StatType, float> statWeights = new Dictionary<StatType, float>();
             foreach (var map in statFieldMap)
             {
-                int value = (int)map.field.GetValue(data);     
+                float value = (float)map.field.GetValue(data);     
                 statWeights.Add(map.type, value);
             }
             _statWeightCache.Add(classId, statWeights);
 
             // 성격 캐싱
-            Dictionary<NatureType, int> natureWeights = new Dictionary<NatureType, int>();
+            Dictionary<NatureType, float> natureWeights = new Dictionary<NatureType, float>();
             foreach (var map in natureFieldMap)
             {
-                int value = (int)map.field.GetValue(data);
+                float value = (float)map.field.GetValue(data);
                 natureWeights.Add(map.type, value);
             }
             _natureWeightCache.Add(classId, natureWeights);
@@ -179,7 +179,7 @@ public class AdventurerFactory : Singleton<AdventurerFactory>
                adv.Stats.Values.Sum() < sumLimit)
         {
             StatType selected = GetWeightedRandomStat(lotteryWeights);
-            int currentVal = adv.GetStat(selected);
+            float currentVal = adv.GetStat(selected);
 
             if (currentVal < MAX_STAT_VALUE) // 상한선 20 체크
             {
@@ -199,7 +199,7 @@ public class AdventurerFactory : Singleton<AdventurerFactory>
             while (adv.Stats.Values.Sum() < sumLimit)
             {
                 StatType selected = GetWeightedRandomStat(lotteryWeights);
-                int currentVal = adv.GetStat(selected);
+                float currentVal = adv.GetStat(selected);
 
                 if (currentVal < MAX_STAT_VALUE)
                 {
@@ -237,10 +237,10 @@ public class AdventurerFactory : Singleton<AdventurerFactory>
         return weights.Keys.First();
     }
     
-    int CalculateNatureValue(int weight)
+    float CalculateNatureValue(float weight)
     {
         // 기본값: weight + 랜덤(-3 ~ +5)
-        int baseVal = weight + Random.Range(-3, 6);
+        float baseVal = weight + Random.Range(-3, 6);
         return Mathf.Clamp(baseVal, 1, 20);
     }
 
@@ -250,7 +250,7 @@ public class AdventurerFactory : Singleton<AdventurerFactory>
         int limit = adv.TotalPotential;
 
         // Enum 키를 사용하여 안전하게 접근
-        int spiritSum = 0;
+        float spiritSum = 0f;
         spiritSum += GetNatureValue(adv, NatureType.Nature_Duty);
         spiritSum += GetNatureValue(adv, NatureType.Nature_Patience);
         spiritSum += GetNatureValue(adv, NatureType.Nature_Ambition);
@@ -263,14 +263,14 @@ public class AdventurerFactory : Singleton<AdventurerFactory>
         return limit;
     }
 
-    int GetNatureValue(Adventurer adv, NatureType type)
+    float GetNatureValue(Adventurer adv, NatureType type)
     {
         return adv.Natures.ContainsKey(type) ? adv.Natures[type] : 0;
     }
 
     void SetNatures(Adventurer adv, ClassData data)
     {
-        Dictionary<NatureType, int> weights = _natureWeightCache[data.ID];
+        Dictionary<NatureType, float> weights = _natureWeightCache[data.ID];
 
         foreach (var kvp in weights)
         {

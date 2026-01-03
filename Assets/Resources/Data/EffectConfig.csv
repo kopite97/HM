@@ -1,0 +1,20 @@
+ID,Effect,Name,Hit_Stats,Hit_Coefs,Resist_Stats,Resist_Coefs,BaseChance,BaseTurn
+2001,NONE,없음,None,0,None,0,0,0
+2002,STUN,기절,Body_Might+Tech_Arms,0.5+0.5,Body_Endurance+Body_Poise,0.5+0.5,0.6,1
+2003,SLEEP,수면,Mind_Focus+Tech_Sorcery,0.5+0.6,Mind_Resolve+Mind_Composure,0.5+0.6,0.7,2
+2004,CONFUSION,혼란,Tech_Subtlety,0.5+0.7,Mind_Composure+Mind_Focus,0.5+0.7,0.5,2
+2005,TAUNT,도발,Body_Might+Mind_Valor,0.5+0.8,Mind_Composure,0.4,0.8,2
+2006,FEAR,공포,Body_Might+Mind_Command,0.5+0.9,Mind_Resolve,0.4,0.7,1
+2007,POISON,독,Tech_Subtlety,0.5,Body_Vitality,0.5,0.8,3
+2008,BLEED,출혈,Tech_Arms,0.5,Body_Endurance,0.5,0.7,3
+2009,BURN,화상,Tech_Sorcery,0.5,Tech_Guarding+Body_Endurance,0.5+0.12,0.7,3
+2010,BUFF_ATK,공격력 증가,Tech_Faith+Mind_Command,0.5+0.13,None,0,1,3
+2011,BUFF_DEF,방어력 증가,Tech_Faith+Tech_Guarding,0.5+0.14,None,0,1,3
+2012,DEBUFF_ATK,공격력 감소,Tech_Sorcery,0.5,Mind_Resolve,0.5,0.8,3
+2013,DEBUFF_DEF,방어력 감소,Body_Might+Tech_Arms,0.5+0.16,Body_Endurance+Tech_Guarding,0.5+0.4,0.8,3
+2014,SLOW,둔화,Tech_Sorcery+Tech_Subtlety,0.5+0.17,Body_Mobility,0.4,0.7,2
+2015,HASTE,가속,Tech_Sorcery+Mind_Focus,0.5+0.18,None,0,1,2
+2016,SHIELD,보호막,Tech_Sorcery+Tech_Faith,0.5+0.19,None,0,1,2
+2017,IMMORTAL,불사,Tech_Faith+Mind_Resolve,0.5+0.20,None,0,1,1
+2018,REGEN,재생,Tech_Faith+Body_Vitality,0.5+0.21,None,0,1,3
+2019,ENCHANT_POISON,맹독 부여,Tech_Subtlety,0.5,None,0,1,5

@@ -38,7 +38,7 @@ public class DamageContext
         Env = env;
 
         CurrentDamageType = skill.Data.Damage_Type;
-        IsHeal = (skill.Data.Effect_Tag == EffectTag.HEAL);
+        //IsHeal = (skill.Data.SkillEffect == SkillEffect.HEAL);
         TotalMultiplier = 1.0f;
     }
     

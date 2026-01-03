@@ -1,5 +1,5 @@
 ID,Name_KR,Name_EN,Rank,Min_Day,Max_Day,Env_Tags,Monster_IDs,Boss_ID,Reward_Gold_Min,Reward_Gold_Max,Desc_KR,Desc_EN
-4001,고블린 숲,Goblin Forest,1,1,1,ENV_NORMAL,2001/2001/2001,2002,100,150,초보 모험가를 위한 훈련장입니다.,Training ground for novice adventurers.
-4002,안개 낀 늪지,Misty Swamp,2,2,3,ENV_MIST/ENV_POISON,2001/2003/2003,2005,300,400,독기와 시야 제한을 조심해야 합니다.,Beware of poison and limited vision.
-4003,유령의 성,Ghost Castle,3,3,5,ENV_DARKNESS/ENV_FEAR,2004/2004/2003,2004,600,800,물리 공격이 통하지 않는 망령들이 출몰합니다.,Ghosts immune to physical attacks haunt here.
-4004,붉은 용의 둥지,Red Dragon Nest,5,7,10,ENV_HEAT/ENV_LAVA,2002/2005/2005,2006,2000,3000,지옥같은 열기와 압도적인 공포가 도사립니다.,Hellish heat and overwhelming fear await.
+4001,고블린 숲,Goblin Forest,1,1,1,ENV_NORMAL,2001+2001+2001,2002,100,150,초보 모험가를 위한 훈련장입니다.,Training ground for novice adventurers.
+4002,안개 낀 늪지,Misty Swamp,2,2,3,ENV_MIST/ENV_POISON,2001+2003+2003,2005,300,400,독기와 시야 제한을 조심해야 합니다.,Beware of poison and limited vision.
+4003,유령의 성,Ghost Castle,3,3,5,ENV_DARKNESS/ENV_FEAR,2004+2004+2003,2004,600,800,물리 공격이 통하지 않는 망령들이 출몰합니다.,Ghosts immune to physical attacks haunt here.
+4004,붉은 용의 둥지,Red Dragon Nest,5,7,10,ENV_HEAT/ENV_LAVA,2002+2005+2005,2006,2000,3000,지옥같은 열기와 압도적인 공포가 도사립니다.,Hellish heat and overwhelming fear await.

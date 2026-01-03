@@ -19,7 +19,11 @@ public class SheetImporter : EditorWindow
 
     private const string URL_RESISTANCECONFIG =
         "https://docs.google.com/spreadsheets/d/e/2PACX-1vTWUHVHOsfnW3evfFUBXmuMa2kwedMrIRBNEBNm1lvqAnr21YBaEUqVqaaXmMXATCmxI7FrLp2QJcK1/pub?output=csv";
-    
+
+    private const string URL_EFFECTCONFIG =
+        "https://docs.google.com/spreadsheets/d/e/2PACX-1vRJ6JW6F9HgwXdAy5JULgyOCMfDx2730MboEEqfCN_-S7S_AA1JjJaAtKgtdO_iPn9bmBUSp9Bqn8Bk/pub?output=csv";
+
+    private const string URL_PROPERTYCONFIG = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTPGZJqv-Uj7dz8Ar3fRS4PQnB7FPEb2qR5tVNCaO1xYoEr8n3cy00wvk9lQ2tVd-ezOa_wkzPkKD_G/pub?output=csv";
     
     [MenuItem("Tools/Update Data (Google Sheets)")]
     public static void UpdateData()
@@ -36,6 +40,8 @@ public class SheetImporter : EditorWindow
         DownloadCSV(URL_SKILL, savePath + "SkillData.csv");
         DownloadCSV(URL_DUNGEON, savePath + "DungeonData.csv");
         DownloadCSV(URL_RESISTANCECONFIG,savePath +"ResistanceConfig.csv");
+        DownloadCSV(URL_EFFECTCONFIG, savePath + "EffectConfig.csv");
+        DownloadCSV(URL_PROPERTYCONFIG,savePath + "PropertyConfig.csv");
         
         AssetDatabase.Refresh();
         Debug.Log("✅ 모든 데이터 다운로드 완료!");

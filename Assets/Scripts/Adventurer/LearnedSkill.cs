@@ -15,7 +15,6 @@ public class LearnedSkill
 
     public int CurrentCost => Data.Cost_Value + (Data.Cost_Growth * (Level - 1));
     public float CurrentCooldown => Mathf.Max(1f,Data.Cooldown - (Data.Cooldown_Reduction * (Level - 1)));
-    public float CurrentEffectValue => Data.Effect_Value + (Data.Effect_Growth * (Level - 1));
     
     public float[] GetCurrentPowerCoefs()
     {

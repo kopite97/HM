@@ -203,37 +203,7 @@ public class BattleManager : Singleton<BattleManager>
 
     private void PerformAction(BattleUnit actor, BattleUnit target, LearnedSkill skill)
     {
- 
-        // ------------데미지 파이프 라인 ------------
         
-        // 파이프 라인 호출
-        DamageContext result = DamagePipeline.Process(actor, target, skill, CurrentEnv);
-
-        if (result.IsHeal)
-        {
-            target.Heal(result.FinalResult);
-        }
-        else
-        {
-            target.TakeDamage(result.FinalResult);
-        }
-        
-        // --------이페긑 파이프라인--------------- 
-        // 힐이나 단순 공격이 아니라 효과가 있는 경우만 실행
-        if (skill.Data.Effect_Tag != EffectTag.NONE && skill.Data.Effect_Tag != EffectTag.HEAL)
-        {
-            EffectContext effResult = EffectPipeline.Process(actor, target, skill);
-
-            if (effResult.IsSuccess)
-            {
-                // TODO 상태부여
-                // target.ApplyEffect 
-            }
-            else
-            {
-                // 상태이상 저항
-            }
-        }
     }
 
     private bool CheckBattleEnd()

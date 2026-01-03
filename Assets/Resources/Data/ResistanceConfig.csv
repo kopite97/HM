@@ -1,4 +1,4 @@
-DamageType,StatType,Coefficient
+Damage_Type,Stat_Type,Coefficient
 Magical,Body_Endurance,0.5
 Magical,Body_Poise,1
 Magical,Tech_Sorcery,0.5
