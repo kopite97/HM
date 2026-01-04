@@ -110,7 +110,7 @@ public enum SkillProperty
     EXECUTE,          // 체력이 낮으면 데미지 2배 (처형)
     
     
-    // [즉발 행동] - BattleManager PerformAction에서 처리
+    // [즉발 행동] 
     DRAIN_HP,         // 데미지의 N% 만큼 시전자 회복 (흡혈)
     RECOIL,           // 데미지의 N% 만큼 시전자 피해 (반동)
     
@@ -161,6 +161,31 @@ public enum SkillEffect
     
     // 인챈트
     ENCHANT_POISON,
+}
+
+public enum TagType
+{
+    None = 0,
+
+    // 원소 속성
+    Fire,       // 화염 (화상, 폭발)
+    Ice,        // 얼음 (빙결, 둔화)
+    Electric,   // 전기 (감전, 기계 추댐)
+    Poison,     // 독
+    Holy,       // 신성 (언데드 추댐)
+    Dark,       // 암흑
+    
+    // 상호작용 상태
+    Wet,        // 젖음 (전기 취약)
+    Oiled,      // 기름 (불 취약)
+    Frozen,     // 빙결 (행동 불가 + 물리 취약)
+    Stunned,    // 기절 (행동 불가)
+    
+    // 유닛 특성
+    Undead,     // 언데드 (힐->데미지, 신성 취약)
+    Machine,    // 기계 (독 면역, 전기 취약)
+    Flying,     // 비행 (근접 회피)
+    Heavy,      // 무거움 (넉백 면역)
 }
 
 public enum DungeonTag

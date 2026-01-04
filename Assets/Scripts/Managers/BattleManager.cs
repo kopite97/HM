@@ -96,7 +96,7 @@ public class BattleManager : Singleton<BattleManager>
             foreach (var unit in _allUnits)
             {
                 if(unit.IsDead) continue;
-                unit.Tick(deltaTime);
+                unit.TickGauge(deltaTime);
             }
         }
     }
@@ -109,12 +109,7 @@ public class BattleManager : Singleton<BattleManager>
         actor.OnTurnStart(TURN_THRESHOLD);
         
         // 상태이상 적용
-        if (!actor.CanAct())
-        {
-            actor.OnTurnEnd();
-            _isProcessingTurn = false;
-            yield break;
-        }
+
         
         // 행동 결정
         (LearnedSkill skill, BattleUnit target) action = DecideBsetAction(actor);

@@ -121,7 +121,7 @@ public class Adventurer
             totalWeight += kvp.Value;
         }
 
-        float score = (totalWeight > 0) ? (weightedSum / totalWeight) * 10f : 0f;
+        float score = (totalWeight > 0) ? (weightedSum / totalWeight) : 0f;
         _currentAbility = Mathf.Round(score * 10f) / 10f;
         _isDirtyAbility = false;
     }

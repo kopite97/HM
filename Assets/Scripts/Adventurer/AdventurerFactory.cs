@@ -14,12 +14,18 @@ public class AdventurerFactory : Singleton<AdventurerFactory>
     private bool _isInitialized = false;
     
     // 스탯 하나당 최대치 
-    private const float MAX_STAT_VALUE = 20;
-    
-    private const float LIMIT_BREAK_HIGH_THRESHOLD = 75;
-    private const float LIMIT_BREAK_MID_THRESHOLD = 68;
+    private const float INPUT_MAX = 10f; // 가중치 최대값
+    private const float MAX_STAT_VALUE = 100f;
+    private const float MAX_NATURE_VALUE = 100f;
+    private const float MIN_POTENTIAL_RATIO = 0.4f;
+    private const float MAX_POTENTIAL_RATIO = 0.8f;
+    private const float LIMIT_BREAK_HIGH_RATIO = 0.93f;
+    private const float LIMIT_BREAK_MID_RATIO = 0.85f;
     private const float LIMIT_BREAK_HIGH_MULTIPLIER = 1.15f;
     private const float LIMIT_BREAK_MID_MULTIPLIER = 1.05f;
+
+    private int _statCount = 0;
+    private float _theoreticalMaxTotal = 0;
 
     private void Start()
     {
@@ -91,6 +97,9 @@ public class AdventurerFactory : Singleton<AdventurerFactory>
             _natureWeightCache.Add(classId, natureWeights);
         }
 
+        _statCount = statFieldMap.Count;
+        _theoreticalMaxTotal = _statCount * MAX_STAT_VALUE;
+
         _isInitialized = true;
         
         Debug.Log($"[Factory] Enum 기반 캐싱 완료! (스탯 종류: {statFieldMap.Count}, 성격 종류: {natureFieldMap.Count})");
@@ -149,41 +158,69 @@ public class AdventurerFactory : Singleton<AdventurerFactory>
         return SkillRange.Medium;
     }
 
-    void DistributeStats(Adventurer adv, ClassData data, int totalPot, int age)
-    {
-        // 1. 해당 직업의 가중치 데이터 가져오기
+    private void DistributeStats(Adventurer adv, ClassData data, int totalPot, int age)
+        {
         if (!_statWeightCache.TryGetValue(data.ID, out var jobWeights)) return;
-
-        // 2. 목표치 및 한계치 설정
+    
+        // 목표치 및 한계치 설정
         float ageEfficiency = GetAgeEfficiency(age);
-        float targetAbility = totalPot * ageEfficiency; // 나이에 따른 목표 능력치 점수 (0~200)
-        int sumLimit = GetStatLimit(adv);               // 성격에 따른 스탯 총량 한계 (잠재력 돌파 가능)
-        bool isLimitBroken = sumLimit > totalPot;       // 한계 돌파 여부 체크
-
-        // 3. 기초 공사: 모든 스탯을 1로 초기화 (최소치 보장)
+        int targetAbility = Mathf.FloorToInt(totalPot * ageEfficiency);
+        int sumLimit = GetStatLimit(adv);               
+        bool isLimitBroken = sumLimit > totalPot;       
+        
+        int currentTotalScore = 0; 
         foreach (StatType type in Enum.GetValues(typeof(StatType)))
         {
             adv.SetStat(type, 1);
+            currentTotalScore += 1;
         }
-
-        // 4. 가중치 추첨 준비
-        // 가중치가 0인 스탯도 아주 낮은 확률(0.1)로 선택될 수 있게 보정
+        
         Dictionary<StatType, float> lotteryWeights = jobWeights.ToDictionary(
             k => k.Key, 
             v => Mathf.Max((float)v.Value, 0.1f) 
         );
-
-        // 5. [1차 배분] 능력치 포인트 추첨 (효율적 성장)
-        // 조건: 현재 능력치가 목표에 미달 AND 스탯 총합이 한계를 넘지 않음
-        while (adv.GetCurrentAbility(_statWeightCache) < targetAbility && 
-               adv.Stats.Values.Sum() < sumLimit)
+        
+        // 벌크 배분 
+        int pointsNeeded = targetAbility - currentTotalScore;
+        // 배분할 포인트가 충분히 많을 때만 벌크 배분 수행 
+        if (pointsNeeded > 50)
+        {
+            int bulkPoints = Mathf.FloorToInt(pointsNeeded * 0.8f); // 80% 선배분
+            float totalWeightSum = lotteryWeights.Values.Sum();
+            
+            List<StatType> keys = new List<StatType>(lotteryWeights.Keys);
+            
+            foreach (var type in keys)
+            {
+                float ratio = lotteryWeights[type] / totalWeightSum;
+                
+                float noise = Random.Range(0.9f, 1.1f); 
+                int addAmount = Mathf.FloorToInt(bulkPoints * ratio * noise);
+    
+                if (addAmount > 0)
+                {
+                    float currentVal = adv.GetStat(type);
+                    float safeAdd = Mathf.Min(addAmount, MAX_STAT_VALUE - currentVal);
+                    
+                    if (safeAdd > 0)
+                    {
+                        adv.SetStat(type, currentVal + safeAdd);
+                        currentTotalScore += (int)safeAdd;
+                    }
+                }
+            }
+        }
+        
+        // 잔여 포인트 랜덤 배분 
+        while (currentTotalScore < targetAbility && currentTotalScore < sumLimit)
         {
             StatType selected = GetWeightedRandomStat(lotteryWeights);
             float currentVal = adv.GetStat(selected);
-
-            if (currentVal < MAX_STAT_VALUE) // 상한선 20 체크
+    
+            if (currentVal < MAX_STAT_VALUE)
             {
                 adv.SetStat(selected, currentVal + 1);
+                currentTotalScore++; // 변수 업데이트
             }
             else
             {
@@ -191,19 +228,19 @@ public class AdventurerFactory : Singleton<AdventurerFactory>
                 if (lotteryWeights.Count == 0) break;
             }
         }
-
-        // 6. [2차 배분] 한계 돌파 추가 성장 (노력에 의한 잠재력 초과)
-        // 성격이 좋아 sumLimit이 남았다면, 효율에 상관없이 한계치까지 스탯을 더 채움
-        if (isLimitBroken && adv.Stats.Values.Sum() < sumLimit)
+    
+        // 추가 성장
+        if (isLimitBroken && currentTotalScore < sumLimit)
         {
-            while (adv.Stats.Values.Sum() < sumLimit)
+            while (currentTotalScore < sumLimit)
             {
                 StatType selected = GetWeightedRandomStat(lotteryWeights);
                 float currentVal = adv.GetStat(selected);
-
+    
                 if (currentVal < MAX_STAT_VALUE)
                 {
                     adv.SetStat(selected, currentVal + 1);
+                    currentTotalScore++;
                 }
                 else
                 {
@@ -212,14 +249,12 @@ public class AdventurerFactory : Singleton<AdventurerFactory>
                 }
             }
         }
-
-        // 7. 결과 보고 (한계 돌파 시 강조 표시)
+    
+        // 7. 결과 보고
         string limitColor = isLimitBroken ? "cyan" : "white";
+        // 로그 찍을 때만 최후 검증용으로 Sum() 사용
         Debug.Log($"<color={limitColor}><b>[{adv.Name}]</b></color> 생성 완료. " +
-                  $"방어점수: {adv.GetDefenseScore(DataManager.Instance.DefenseWeight)} " + 
-                  $"(잠재력: {adv.TotalPotential}) / " +
-                  $"능력치: {adv.GetCurrentAbility(_statWeightCache)} / " + 
-                  $"스탯총합: {adv.Stats.Values.Sum()} (한계: {sumLimit})");
+                  $"스탯총합: {currentTotalScore} (실제: {adv.Stats.Values.Sum()})");
     }
 
     // 가중치 랜덤 선택 로직
@@ -239,9 +274,11 @@ public class AdventurerFactory : Singleton<AdventurerFactory>
     
     float CalculateNatureValue(float weight)
     {
-        // 기본값: weight + 랜덤(-3 ~ +5)
-        float baseVal = weight + Random.Range(-3, 6);
-        return Mathf.Clamp(baseVal, 1, 20);
+        float scaleFactor = MAX_NATURE_VALUE / INPUT_MAX; 
+        float baseVal = weight * scaleFactor; 
+        float variance = Random.Range(-2.0f * scaleFactor, 2.0f * scaleFactor); 
+
+        return Mathf.Clamp(baseVal + variance, 1, MAX_NATURE_VALUE);
     }
 
     // 한계치 계산 -> duty, patience, ambition, honor 
@@ -249,16 +286,19 @@ public class AdventurerFactory : Singleton<AdventurerFactory>
     {
         int limit = adv.TotalPotential;
 
-        // Enum 키를 사용하여 안전하게 접근
         float spiritSum = 0f;
         spiritSum += GetNatureValue(adv, NatureType.Nature_Duty);
         spiritSum += GetNatureValue(adv, NatureType.Nature_Patience);
         spiritSum += GetNatureValue(adv, NatureType.Nature_Ambition);
         spiritSum += GetNatureValue(adv, NatureType.Nature_Honor);
 
-        // 한계 돌파 로직
-        if (spiritSum >= LIMIT_BREAK_HIGH_THRESHOLD) limit = Mathf.RoundToInt(limit * LIMIT_BREAK_HIGH_MULTIPLIER); // 15%
-        else if (spiritSum >= LIMIT_BREAK_MID_THRESHOLD) limit = Mathf.RoundToInt(limit * LIMIT_BREAK_MID_MULTIPLIER); // 5%
+        // 성격 4개 만점 기준 비율 계산
+        float maxSpirit = MAX_NATURE_VALUE * 4f;
+        
+        if (spiritSum >= maxSpirit * LIMIT_BREAK_HIGH_RATIO) 
+            limit = Mathf.RoundToInt(limit * LIMIT_BREAK_HIGH_MULTIPLIER);
+        else if (spiritSum >= maxSpirit * LIMIT_BREAK_MID_RATIO) 
+            limit = Mathf.RoundToInt(limit * LIMIT_BREAK_MID_MULTIPLIER);
 
         return limit;
     }
@@ -279,6 +319,28 @@ public class AdventurerFactory : Singleton<AdventurerFactory>
     }
     
     float GetAgeEfficiency(int age) => (age < 40) ? Mathf.Lerp(0.3f, 1.0f, (age - 15f) / 25f) : Mathf.Lerp(1.0f, 0.7f, (age - 40f) / 25f);
-    int RollTotalPotential() => Random.Range(25, 101) + Random.Range(25, 101);
-    string GetGradeString(int pot) => (pot >= 200) ? "The One" : (pot >= 180) ? "S" : (pot >= 150) ? "A" : (pot >= 100) ? "B" : "C";
+
+    int RollTotalPotential()
+    {
+        float minPot = _theoreticalMaxTotal * MIN_POTENTIAL_RATIO;
+        float maxPot = _theoreticalMaxTotal * MAX_POTENTIAL_RATIO;
+
+        float halfMin = minPot * 0.5f;
+        float halfMax = maxPot * 0.5f;
+        int val1 = Random.Range(Mathf.RoundToInt(halfMin), Mathf.RoundToInt(halfMax) + 1);
+        int val2 = Random.Range(Mathf.RoundToInt(halfMin), Mathf.RoundToInt(halfMax) + 1);
+        
+        return val1 + val2;
+    }
+
+    string GetGradeString(int pot)
+    {
+        float ratio = (float)pot / _theoreticalMaxTotal;
+
+        if (ratio >= 0.75f) return "The One"; // 상위 0.1% (만점의 75% 이상)
+        if (ratio >= 0.675f) return "S";      // 상위 10%
+        if (ratio >= 0.60f) return "A";       // 상위 30%
+        if (ratio >= 0.50f) return "B";       // 평균
+        return "C";
+    }
 }

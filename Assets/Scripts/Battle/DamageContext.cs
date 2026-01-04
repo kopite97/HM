@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using System.Text;
 
 /// <summary>
@@ -17,6 +18,8 @@ public class DamageContext
     public DamageType CurrentDamageType;
     public bool IsHeal;
     public bool IsCritical;
+    public bool IsHit;
+    private HashSet<SkillProperty> SkillProperties = new HashSet<SkillProperty>();
 
     public float BasePotency; // 기초 위력 (스탯 합산)
     public float TotalMultiplier; // 최종 승수 (1.0 = 100%)
@@ -27,8 +30,10 @@ public class DamageContext
     // 최종 결과 
     public float FinalResult;
     
-    // 계산 과정 기록
+    // 유틸리티
     public StringBuilder ProcessLog = new StringBuilder();
+    public bool IsBlock;
+    public bool IgnoreDefense;
 
     public DamageContext(BattleUnit att, BattleUnit def, LearnedSkill skill, BattleEnvironment env)
     {
@@ -38,17 +43,15 @@ public class DamageContext
         Env = env;
 
         CurrentDamageType = skill.Data.Damage_Type;
-        //IsHeal = (skill.Data.SkillEffect == SkillEffect.HEAL);
+        IsHeal = (skill.Data.SkillProperty == SkillProperty.HEAL);
         TotalMultiplier = 1.0f;
     }
     
-    /// <summary>
-    /// 로그 추가
-    /// </summary>
-    /// <param name="message"></param>
     public void AddLog(string message)
     {
         ProcessLog.AppendLine(message);
     }
         
+    public void AddProperty(SkillProperty skillProperty) =>  SkillProperties.Add(skillProperty);
+    public bool HasProperty(SkillProperty skillProperty) => SkillProperties.Contains(skillProperty);
 }
