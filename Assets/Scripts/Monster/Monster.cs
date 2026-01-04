@@ -14,7 +14,9 @@ public class Monster
     
     public PartyPosition StartPosition { get; private set; } // 배치된 위치
 
-    public List<int> Skill_List =  new List<int>();
+    private List<LearnedSkill> _skills = new List<LearnedSkill>();
+    public IReadOnlyList<LearnedSkill> Skills => _skills;
+    
 
     private Dictionary<StatType, float> _stats = new Dictionary<StatType, float>();
     private Dictionary<NatureType, float> _natures = new Dictionary<NatureType, float>();
@@ -26,9 +28,8 @@ public class Monster
     /// </summary>
     /// <param name="data">원본 몬스터 데이터</param>
     /// <param name="position">이 몬스터가 배치될 위치</param>
-    public Monster(MonsterData data, PartyPosition position)
+    public Monster(MonsterData data)
     {
-        StartPosition = position;
         ID = data.ID;
         Name = data.NameKR;
         Level = data.Level;
@@ -37,9 +38,13 @@ public class Monster
         DefenseScore = data.DefenseScore;
         Desc = data.Desc;
 
+        var skillDataDict = DataManager.Instance.SkillDict;
+
         foreach (var skillId in data.Skill_List)
         {
-            Skill_List.Add(skillId);
+            SkillData skillData = skillDataDict[skillId];
+            LearnedSkill skill = new LearnedSkill(skillData);
+            _skills.Add(skill);
         }
 
         foreach (StatType type in Enum.GetValues(typeof(StatType)))

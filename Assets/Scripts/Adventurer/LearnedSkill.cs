@@ -11,11 +11,29 @@ public class LearnedSkill
     {
         Data = data;
         Level = initialLevel;
+        CurrentCooldown = 0;
+    }
+
+    public LearnedSkill(LearnedSkill learnedSkill)
+    {
+        Data = learnedSkill.Data;
+        Level = learnedSkill.Level;
+        CurrentCooldown = 0;
     }
 
     public int CurrentCost => Data.Cost_Value + (Data.Cost_Growth * (Level - 1));
-    public float CurrentCooldown => Mathf.Max(1f,Data.Cooldown - (Data.Cooldown_Reduction * (Level - 1)));
-    
+    public int CurrentCooldown { get; private set; } = 0;
+
+    public int MaxCoolDown
+    {
+        get
+        {
+            float reduction = Data.Cooldown_Reduction * (Level - 1);
+            int finalCd = Mathf.FloorToInt(Data.Cooldown - reduction);
+            return Mathf.Max(0,finalCd);
+        }
+    }
+
     public float[] GetCurrentPowerCoefs()
     {
         float[] currentCoefs = new float[Data.Power_Coefs.Length];
@@ -35,5 +53,28 @@ public class LearnedSkill
         Level++;
         // TODO : 플레이어의 모험가는 이펙트나 로그 출력
     }
+    
+    public bool IsReady(BattleUnit actor)
+    {
+        if (CurrentCooldown > 0) return false;
 
+        if (!actor.HasEnoughCost(Data)) return false;
+        
+        // 상태이상 체크는 BattleUnit에서
+        return true;
+    }
+
+    public void Use()
+    {
+        CurrentCooldown = MaxCoolDown;
+    }
+    
+    public void DecreaseCooldown(int amount = 1)
+    {
+        if (CurrentCooldown > 0)
+        {
+            CurrentCooldown -= amount;
+            if (CurrentCooldown < 0) CurrentCooldown = 0;
+        }
+    }
 }

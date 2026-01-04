@@ -86,11 +86,13 @@ public enum SkillTarget
     SELF
 }
 
-public enum SkillCostType
+public enum SkillResourceType
 {
     NONE,
-    STAMINA,
-    MANA
+    HP,
+    SP,
+    MP,
+    DP
 }
 
 /// <summary>

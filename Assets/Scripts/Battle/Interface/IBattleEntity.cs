@@ -6,8 +6,14 @@ public interface IBattleEntity
     PartyPosition Position { get; }
     
     float GetMaxHp();
-    float GetBaseStat(StatType type);
-    float GetNatureStat(NatureType type);
+    float GetMaxMP();
+    float GetMaxSP();
+    float GetMaxDP();
+    int GetMaxCost();
     float GetDefenseScore();
-    List<int> GetSkillIDs();
+    List<LearnedSkill> GetSkills();
+    Dictionary<StatType, float> GetStats();
+    Dictionary<NatureType, float> GetNatures();
+
+
 }

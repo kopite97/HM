@@ -36,8 +36,7 @@ public class Adventurer
     // --- 프로퍼티 (Lazy Evaluation 적용) ---
     public float DefenseScore => _cachedDefenseScore;
     public AdventurerDefenseType DefenseType => _cachedDefenseType;
-
-    // [수정] 성장의 기준을 단순 합계가 아닌 '현재 능력치'로 변경
+    
     public bool CanGrow => _currentAbility < TotalPotential;
     public float CurrentTotalStat => _stats.Values.Sum();
     
@@ -146,7 +145,7 @@ public class Adventurer
         float scoreA = weightData.CalculateScore(_stats, weightData.PhysicalDefenseWeights);
         float scoreB = weightData.CalculateScore(_stats, weightData.EvasionDefenseWeights);
         float scoreC = weightData.CalculateScore(_stats, weightData.MagicalDefenseWeights);
-        float scoreD = weightData.CalculateScore(_stats, weightData.DivineDefenseWeights); // [수정] 오타 scroeD -> scoreD
+        float scoreD = weightData.CalculateScore(_stats, weightData.DivineDefenseWeights); 
 
         float maxScore = Mathf.Max(scoreA, Mathf.Max(scoreB, Mathf.Max(scoreC, scoreD)));
         _cachedDefenseScore = maxScore;

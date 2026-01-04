@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 // 1. 직업 데이터 (ClassData)
 using System.Collections.Generic;
+using UnityEngine.Serialization;
 
 [System.Serializable] 
 public class ClassData
@@ -85,7 +86,8 @@ public class SkillData
     public string NameKR;
     public SkillType Type;
     public SkillTarget Target;
-    public SkillCostType Cost_Type;
+    public SkillResourceType Resource_Type;
+    public int Resource;
     public SkillRange Range;
     public SkillProperty SkillProperty;
     public float Property_Weight;
