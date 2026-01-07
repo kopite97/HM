@@ -1,23 +1,23 @@
-ID,NameKR,Type,Damage_Type,Porperty,Property_Weight,Effect,Effect_Weight,Target,Cost_Type,Cost_Value,Cost_Growth,Cooldown,Cooldown_Reduction,Base_Stats,Power_Coefs,Power_Growth,Range,DescKR
-1001,강격,ACTIVE,Physical,NONE,1,NONE,1,ENEMY_SINGLE,STAMINA,10,2,5,0.2,Body_Might,1.5,0.1,Short,무기에 체중을 실어 적 하나를 강하게 내려칩니다.
-1002,방패 밀치기,ACTIVE,Physical,NONE,1,STUN,1,ENEMY_SINGLE,STAMINA,15,2,12,0.5,Body_Endurance,1.2,0.1,Short,방패로 적을 가격하여 피해를 입히고 잠시 기절시킵니다.
-1003,전투의 함성,ACTIVE,Physical,AGGRO_UP,1,NONE,1,ENEMY_ALL,STAMINA,20,3,15,0.5,Body_Might,0.5,0.05,Short,우렁찬 함성을 질러 적 전체의 주의를 자신에게 끕니다.
-1004,회전 베기,ACTIVE,Physical,NONE,1,NONE,1,ENEMY_AREA,STAMINA,25,4,10,0.4,Body_Might+Tech_Arms,1.0+0.5,0.1+0.05,Short,몸을 회전시켜 주변의 적들을 동시에 공격합니다.
-1005,강철 피부,PASSIVE,None,NONE,1,NONE,1,SELF,NONE,0,0,0,0,Body_Endurance,0.2,0.02,Short,피부를 단련하여 영구적으로 물리 방어력을 높입니다.
-2001,급소 찌르기,ACTIVE,Physical,IGNORE_DEF,1,NONE,1,ENEMY_SINGLE,STAMINA,12,2,8,0.3,Body_Mobility,2.2,0.15,Short,적의 약점을 정확히 찔러 방어력을 무시하는 피해를 줍니다.
-2002,독 바르기,ACTIVE,Physical,NONE,1,NONE,1,SELF,MANA,10,1,20,1,Body_Mobility,0,0,Short,무기에 독을 발라 다음 공격 시 추가 효과를 부여합니다.
-2003,단검 투척,ACTIVE,Physical,NONE,1,ENCHANT_POISON,1,ENEMY_SINGLE,STAMINA,8,1,4,0.1,Body_Mobility,1,0.1,Medium,품에서 단검을 꺼내 중거리의 적에게 던집니다.
-2004,그림자 망토,PASSIVE,None,AGGRO_RESET,1,NONE,1,SELF,NONE,0,0,0,0,Body_Mobility,0.15,0.02,Short,적들의 시선에서 벗어나 어그로 수치를 낮게 유지합니다.
-3001,화염구,ACTIVE,Magical,NONE,1,BURN,1,ENEMY_SINGLE,MANA,15,3,6,0.2,Tech_Sorcery,2.5,0.2,Long,거대한 화염 덩어리를 날려 적을 태워버립니다.
-3002,연쇄 번개,ACTIVE,Magical,NONE,1,STUN,1,ENEMY_AREA,MANA,25,5,12,0.5,Tech_Sorcery,1.8,0.15,Long,여러 적을 타고 흐르는 전류를 방출합니다. 확률적으로 경직을 줍니다.
-3003,마력 보호막,ACTIVE,None,NONE,1,SHIELD,1,SELF,MANA,30,5,25,1,Tech_Sorcery,1.5,0.1,Long,마력으로 보호막을 형성하여 들어오는 피해를 흡수합니다.
-3004,명상,ACTIVE,None,NONE,1,REGEN,1,SELF,NONE,0,0,20,1,Tech_Sorcery,0,0,Medium,전투 중 잠시 집중하여 소모된 마나를 회복합니다.
-3005,고대 지식,PASSIVE,None,NONE,1,NONE,1,SELF,NONE,0,0,0,0,Tech_Sorcery,0.3,0.03,Long,마법에 대한 이해도를 높여 마법 공격력을 영구적으로 강화합니다.
-4001,치유의 빛,ACTIVE,Holy,HEAL,1,NONE,1,ALLY_SINGLE,MANA,20,3,8,0.4,Tech_Faith,2.5,0.2,Long,신성한 힘으로 아군 한 명의 상처를 치유합니다.
-4002,성역,ACTIVE,Holy,HEAL,1,REGEN,1,ALLY_ALL,MANA,40,6,20,1,Tech_Faith,1.5,0.1,Long,넓은 범위를 축복하여 아군 전체의 체력을 서서히 회복시킵니다.
-4003,심판,ACTIVE,Holy,NONE,1,STUN,1,ENEMY_SINGLE,MANA,25,4,10,0.5,Body_Might+Tech_Faith,1.0+1.2,0.1+0.1,Medium,신성한 망치를 소환하여 적을 타격하고 기절시킵니다.
-4004,축복,ACTIVE,Holy,CLEANSE,1,REGEN,1,ALLY_SINGLE,MANA,15,2,15,0.5,Tech_Faith,0.5,0.05,Long,아군의 능력을 일시적으로 강화합니다. (효과는 구현 필요)
-4005,신의 가호,PASSIVE,Holy,CLEANSE,1,IMMORTAL,1,SELF,NONE,0,0,0,0,Tech_Faith,0.1,0.01,Long,신의 보호를 받아 해로운 효과에 대한 저항력을 높입니다.
-5001,정밀 사격,ACTIVE,Physical,NONE,1,NONE,1,ENEMY_SINGLE,STAMINA,15,2,10,0.5,Tech_Archery,3,0.25,Long,먼 거리에서 적의 급소를 노려 치명적인 피해를 입힙니다.
-5002,화살 비,ACTIVE,Physical,NONE,1,NONE,1,ENEMY_AREA,STAMINA,25,4,15,0.8,Tech_Archery,1.2,0.1,Long,하늘을 뒤덮는 화살을 쏘아 넓은 지역을 초토화합니다.
-5003,밀쳐내기,ACTIVE,Physical,KNOCKBACK,1,NONE,1,ENEMY_SINGLE,STAMINA,10,2,8,0.3,Body_Might+Body_Poise,0.5+0.5,0.05+0.05,Medium,근접한 적을 발로 차거나 강하게 쏘아 거리를 벌립니다.
+ID,NameKR,Type,Target,Resource_Type,Resource,Range,Damage_Type,Skill_Modifiers,Skill_Actions,Status_Effects,Traits,Cooldown,Cooldown_Reduction,Base_Stats,Power_Coefs,Power_Growth,DescKR
+1001,강격,ACTIVE,ENEMY_SINGLE,SP,20,Short,Physical,None,None,None,Physical+Melee,5,0.2,Body_Might,1.5,0.1,무기에 체중을 실어 적 하나를 강하게 내려칩니다.
+1002,방패 밀치기,ACTIVE,ENEMY_SINGLE,SP,30,Short,Physical,None,None,Stun,Physical+Melee,12,0.5,Body_Endurance,1.2,0.1,방패로 적을 가격하여 피해를 입히고 잠시 기절시킵니다.
+1003,전투의 함성,ACTIVE,ENEMY_ALL,SP,20,Medium,Physical,None,AggroProvoke,BuffDefense,None,15,0.5,Body_Might,0.5,0.05,우렁찬 함성을 질러 적 전체의 주의를 자신에게 끕니다.
+1004,회전 베기,ACTIVE,ENEMY_AREA,SP,20,Short,Physical,None,None,None,Physical+Melee+AreaOfEffect,10,0.4,Body_Might+Tech_Arms,1.0+0.5,0.1+0.05,몸을 회전시켜 주변의 적들을 동시에 공격합니다.
+1005,강철 피부,PASSIVE,SELF,NONE,20,Short,None,None,None,BuffDefense+Shield,None,0,0,Body_Endurance,0.2,0.02,피부를 단련하여 영구적으로 물리 방어력을 높입니다.
+2001,급소 찌르기,ACTIVE,ENEMY_SINGLE,SP,20,Short,Physical,GuaranteedCrit,None,Bleed,Physical+Melee,8,0.3,Body_Mobility,2.2,0.15,적의 약점을 정확히 찔러 방어력을 무시하는 피해를 줍니다.
+2002,독 바르기,ACTIVE,SELF,MP,20,Short,Physical,None,None,EnchantPoison,Poison,20,1,Body_Mobility,0,0,무기에 독을 발라 다음 공격 시 추가 효과를 부여합니다.
+2003,단검 투척,ACTIVE,ENEMY_SINGLE,SP,20,Medium,Physical,None,None,Bleed,Physical+Ranged+Projectile,4,0.1,Body_Mobility,1,0.1,품에서 단검을 꺼내 중거리의 적에게 던집니다.
+2004,그림자 망토,PASSIVE,SELF,NONE,20,Short,None,None,AggroReset,SpeedUp,None,0,0,Body_Mobility,0.15,0.02,적들의 시선에서 벗어나 어그로 수치를 낮게 유지합니다.
+3001,화염구,ACTIVE,ENEMY_SINGLE,MP,20,Long,Magical,None,None,Burn,Magical+Fire+Ranged+Projectile,6,0.2,Tech_Sorcery,2.5,0.2,거대한 화염 덩어리를 날려 적을 태워버립니다.
+3002,연쇄 번개,ACTIVE,ENEMY_AREA,MP,20,Long,Magical,None,None,Stun,Magical+Electric+Ranged+AreaOfEffect,12,0.5,Tech_Sorcery,1.8,0.15,여러 적을 타고 흐르는 전류를 방출합니다. 확률적으로 경직을 줍니다.
+3003,마력 보호막,ACTIVE,SELF,MP,20,Long,None,None,None,Shield,Magical,25,1,Tech_Sorcery,1.5,0.1,마력으로 보호막을 형성하여 들어오는 피해를 흡수합니다.
+3004,명상,ACTIVE,SELF,NONE,20,Short,None,None,RecoveryMana,None,None,20,1,Tech_Sorcery,0,0,전투 중 잠시 집중하여 소모된 마나를 회복합니다.
+3005,고대 지식,PASSIVE,SELF,NONE,20,Short,None,None,None,RegenerationMP,None,0,0,Tech_Sorcery,0.3,0.03,마법에 대한 이해도를 높여 마법 공격력을 영구적으로 강화합니다.
+4001,치유의 빛,ACTIVE,ALLY_SINGLE,DP,20,Long,Holy,None,Heal,None,Holy+Ranged,8,0.4,Tech_Faith,2.5,0.2,신성한 힘으로 아군 한 명의 상처를 치유합니다.
+4002,성역,ACTIVE,ALLY_ALL,DP,20,Long,Holy,None,Heal+RecoveryMana,BuffDefense,Holy+Ranged,20,1,Tech_Faith,1.5,0.1,넓은 범위를 축복하여 아군 전체의 체력을 서서히 회복시킵니다.
+4003,심판,ACTIVE,ENEMY_SINGLE,DP,20,Medium,Holy,None,DispelBuff,None,Holy+Ranged,10,0.5,Body_Might+Tech_Faith,1.0+1.2,0.1+0.1,신성한 망치를 소환하여 적을 타격하고 기절시킵니다.
+4004,축복,ACTIVE,ALLY_SINGLE,DP,20,Long,Holy,None,None,BuffAttack+BuffDefense,Holy+Ranged,15,0.5,Tech_Faith,0.5,0.05,아군의 능력을 일시적으로 강화합니다. (효과는 구현 필요)
+4005,신의 가호,PASSIVE,SELF,DP,20,Short,Holy,None,None,BuffDefense,Holy,0,0,Tech_Faith,0.1,0.01,신의 보호를 받아 해로운 효과에 대한 저항력을 높입니다.
+5001,정밀 사격,ACTIVE,ENEMY_SINGLE,SP,20,Long,Physical,None,None,None,Physical+Ranged+Projectile,10,0.5,Tech_Archery,3,0.25,먼 거리에서 적의 급소를 노려 치명적인 피해를 입힙니다.
+5002,화살 비,ACTIVE,ENEMY_AREA,SP,20,Long,Physical,None,None,None,Physical+Ranged+Projectile+AreaOfEffect,15,0.8,Tech_Archery,1.2,0.1,하늘을 뒤덮는 화살을 쏘아 넓은 지역을 초토화합니다.
+5003,밀쳐내기,ACTIVE,ENEMY_SINGLE,SP,20,Short,Physical,None,Knockback,None,Physical+Ranged,8,0.3,Body_Might+Body_Poise,0.5+0.5,0.05+0.05,근접한 적을 발로 차거나 강하게 쏘아 거리를 벌립니다.

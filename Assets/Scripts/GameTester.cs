@@ -46,8 +46,26 @@ public class GameTester : MonoBehaviour
                 // LearnedSkill의 프로퍼티가 제대로 계산되는지 확인
                 sb.AppendLine($"🔹 <b>{skill.Data.NameKR}</b> (Lv.{skill.Level})");
                 sb.AppendLine($"   - 타입: {skill.Data.Type} / 사거리: {skill.Data.Range}");
-                sb.AppendLine($"   - 현재 코스트: {skill.CurrentCost} (기본: {skill.Data.Cost_Value})");
                 sb.AppendLine($"   - 현재 쿨타임: {skill.CurrentCooldown}s (기본: {skill.Data.Cooldown}s)");
+                foreach (var modifier in skill.Data.Skill_Modifiers)
+                {
+                    sb.AppendLine($"    - 스킬 Modifiers : {modifier}");
+                }
+
+                foreach (var action in skill.Data.Skill_Actions)
+                {
+                    sb.AppendLine($"    - 스킬 Actions : {action}");
+                }
+
+                foreach (var effect in skill.Data.Status_Effects)
+                {
+                    sb.AppendLine($"    -스킬 Status Effets : {effect}");
+                }
+
+                foreach (var trait in skill.Data.Traits)
+                {
+                    sb.AppendLine($"    -스킬  Traits : {trait}");
+                }
                 
                 // 계수 배열 출력 확인
                 float[] coefs = skill.GetCurrentPowerCoefs();

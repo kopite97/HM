@@ -19,7 +19,7 @@ public class DamageContext
     public bool IsHeal;
     public bool IsCritical;
     public bool IsHit;
-    private HashSet<SkillProperty> SkillProperties = new HashSet<SkillProperty>();
+    private HashSet<SkillModifier> SkillProperties = new HashSet<SkillModifier>();
 
     public float BasePotency; // 기초 위력 (스탯 합산)
     public float TotalMultiplier; // 최종 승수 (1.0 = 100%)
@@ -43,7 +43,7 @@ public class DamageContext
         Env = env;
 
         CurrentDamageType = skill.Data.Damage_Type;
-        IsHeal = (skill.Data.SkillProperty == SkillProperty.HEAL);
+        //IsHeal = (skill.Data.SkillProperty == SkillModifier.HEAL);
         TotalMultiplier = 1.0f;
     }
     
@@ -52,6 +52,6 @@ public class DamageContext
         ProcessLog.AppendLine(message);
     }
         
-    public void AddProperty(SkillProperty skillProperty) =>  SkillProperties.Add(skillProperty);
-    public bool HasProperty(SkillProperty skillProperty) => SkillProperties.Contains(skillProperty);
+    public void AddProperty(SkillModifier skillModifier) =>  SkillProperties.Add(skillModifier);
+    public bool HasProperty(SkillModifier skillModifier) => SkillProperties.Contains(skillModifier);
 }

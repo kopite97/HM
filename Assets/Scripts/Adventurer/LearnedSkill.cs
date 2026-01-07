@@ -4,6 +4,7 @@ using UnityEngine.Serialization;
 [System.Serializable]
 public class LearnedSkill
 {
+    // TODO : SkillSO로 교체
     public SkillData Data;
     public int Level;
 
@@ -20,8 +21,7 @@ public class LearnedSkill
         Level = learnedSkill.Level;
         CurrentCooldown = 0;
     }
-
-    public int CurrentCost => Data.Cost_Value + (Data.Cost_Growth * (Level - 1));
+    
     public int CurrentCooldown { get; private set; } = 0;
 
     public int MaxCoolDown

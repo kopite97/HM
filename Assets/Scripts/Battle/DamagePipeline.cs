@@ -51,7 +51,7 @@ public static class DamagePipeline
     private static void CheckHit(DamageContext ctx)
     {
         // 필중 or  힐은 무조건 맞춤
-        if (ctx.IsHeal || ctx.HasProperty(SkillProperty.ALWAYS_HIT))
+        if (ctx.IsHeal || ctx.HasProperty(SkillModifier.GuaranteedHit))
         {
             ctx.IsHit = true;
             return;
@@ -153,7 +153,7 @@ public static class DamagePipeline
     
     private static void CheckCritical(DamageContext ctx)
     {
-        if (ctx.HasProperty(SkillProperty.ALWAYS_CRIT))
+        if (ctx.HasProperty(SkillModifier.GuaranteedCrit))
         {
             ctx.IsCritical = true;
         }

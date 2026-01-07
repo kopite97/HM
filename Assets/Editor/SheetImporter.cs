@@ -56,7 +56,7 @@ public class SheetImporter : EditorWindow
 
         if (request.result != UnityWebRequest.Result.Success)
         {
-            Debug.LogError($"[Error] {Path.GetFileName(filePath)} 다우론드 실패 : {request.error}");
+            Debug.LogError($"[Error] {Path.GetFileName(filePath)} 다운로드 실패 : {request.error}");
         }
         else
         {

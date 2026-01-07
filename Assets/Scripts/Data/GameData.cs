@@ -89,20 +89,19 @@ public class SkillData
     public SkillResourceType Resource_Type;
     public int Resource;
     public SkillRange Range;
-    public SkillProperty SkillProperty;
-    public float Property_Weight;
-    public SkillEffect SkillEffect;
-    public float Effect_Weight;
     public DamageType Damage_Type;
-
+    
+    public SkillModifier[] Skill_Modifiers;
+    public SkillAction[] Skill_Actions;
+    public StatusEffect[] Status_Effects;
+    public Trait[] Traits;
+        
     // 레벨 1 기준 기본값 
-    public int Cost_Value;
     public int Cooldown;
     public StatType[] Base_Stats; 
     public float[] Power_Coefs;   // [예: 1.5, 0.8]
 
     // 레벨당 성장 수치 (성장 설계도) 
-    public int Cost_Growth;          // 레벨당 증가할 코스트 (+2 등)
     public float Cooldown_Reduction; // 레벨당 감소할 쿨타임 (-0.5 등)
     public float[] Power_Growth;     // 계수별 성장치 [예: 0.1, 0.05]
     
@@ -129,11 +128,12 @@ public class DungeonData
     public string DescEN;
 }
 
+// TODO 밑에 두개는 지우거나 리팩토링 해야됨
 [System.Serializable]
 public class EffectConfigData
 {
     public int ID;
-    public SkillEffect Effect;
+    public SkillAction action;
     public string Name;
     public StatType[] Hit_Stats;
     public float[] Hit_Coefs;
@@ -147,7 +147,7 @@ public class EffectConfigData
 public class PropertyConfigData
 {
     public int ID;
-    public SkillProperty Property;
+    public SkillModifier modifier;
     public string Name;
     public StatType[] Hit_Stats;
     public float[] Hit_Coefs;
