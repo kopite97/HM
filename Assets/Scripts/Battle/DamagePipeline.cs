@@ -13,10 +13,10 @@ public static class DamagePipeline
     
     public static DamageContext Process(DamageContext ctx)
     {
-        ctx.AddLog($"⚔️ [계산 시작] {ctx.Attacker.Name} ➜ {ctx.Defender.Name} ({ctx.Skill.Data.NameKR})");
+        ctx.AddLog($"⚔️ [계산 시작] {ctx.Attacker.Name} ➜ {ctx.Defender.Name} ({ctx.Skill._sourceSkill.Name})");
         // 파이프라인 단계별 실행
        
-        // 1. 빗나감 체크
+        // 빗나감 체크
         CheckHit(ctx);
         if (!ctx.IsHit)
         {
@@ -25,14 +25,11 @@ public static class DamagePipeline
             return ctx;
         }
         
-        // 2. 스탯 기반 데미지 합산
+        // 스탯 기반 데미지 합산
         CalculateBasePotency(ctx);
         
-        // 3. 포지션, 환경, 태그 보정 
-        ApplyPositionLogic(ctx);
-        ApplyEnvironment(ctx);
-        
 
+        ApplyEnvironment(ctx);
         if (ctx.IsHeal)
         {
             ApplyHeal(ctx);
@@ -84,7 +81,7 @@ public static class DamagePipeline
         ctx.AddLog($"[1. 기초 위력]");
         for (int i = 0; i < coefs.Length; i++)
         {
-            StatType stat = ctx.Skill.Data.Base_Stats[i];
+            StatType stat = ctx.Skill._sourceSkill.BaseStats[i];
             float val = ctx.Attacker.GetStat(stat);
             float added = val * coefs[i];
             
@@ -96,50 +93,12 @@ public static class DamagePipeline
         ctx.AddLog($" > 합계: {ctx.BasePotency:F1}");
     }
     
-    // 포지션/사거리 보정
-    private static void ApplyPositionLogic(DamageContext ctx)
-    {
-        float multiplier = 1.0f;
-        SkillRange range = ctx.Skill.Data.Range;
-        PartyPosition attPos = ctx.Attacker.CurrentPosition;
-        PartyPosition defPos = ctx.Defender.CurrentPosition;
-
-        // 공격자 위치 페널티
-        if (range == SkillRange.Short)
-        {
-            if (attPos == PartyPosition.Midguard) multiplier = 0.8f;
-            else if (attPos == PartyPosition.Rearguard) multiplier = 0f;
-        }
-        else if (range == SkillRange.Medium)
-        {
-            if (attPos == PartyPosition.Rearguard) multiplier = 0.8f;
-        }
-        
-        // 거리 페널티
-        // TODO 살짝 수정 필요.. (Defender Party의 전위,후위가 모두 죽었다면 페널티 제거)
-        if (range == SkillRange.Short && defPos == PartyPosition.Rearguard)
-        {
-            multiplier *= 0.5f; // 너무 멈
-            ctx.AddLog(" - 거리 페널티 (Short -> Rear): 50% 감소");
-        }
-
-
-        ctx.TotalMultiplier *=multiplier;
-        ctx.AddLog($"[2. 포지션] 보정값: x{multiplier:F2}");
-        
-    }
     
     // 환경 변수 보정
     private static void ApplyEnvironment(DamageContext ctx)
     {
         if (ctx.Env == null) return;
         float envMult = 1.0f;
-
-        if (ctx.Env.ContainsTag(DungeonTag.Darkness) && ctx.Skill.Data.Range == SkillRange.Long)
-        {
-            envMult -= 0.2f;
-            ctx.AddLog(" - 환경(어둠): 원거리 효율 20% 감소");
-        }
 
         if (ctx.IsHeal && ctx.Env.ContainsTag(DungeonTag.HolyGround))
         {
@@ -194,7 +153,7 @@ public static class DamagePipeline
 
     private static void ApplyResistance(DamageContext ctx)
     {
-        DamageType damageType = ctx.Skill.Data.Damage_Type;
+        DamageType damageType = ctx.Skill._sourceSkill.DamageType;
 
         // 트루 데미지 / 데미지 종류가 아니면 저항 불가
         if (damageType.HasFlag(DamageType.True) || damageType.HasFlag(DamageType.None))

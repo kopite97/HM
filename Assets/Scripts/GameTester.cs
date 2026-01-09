@@ -44,25 +44,25 @@ public class GameTester : MonoBehaviour
             foreach (var skill in adv.Skills)
             {
                 // LearnedSkill의 프로퍼티가 제대로 계산되는지 확인
-                sb.AppendLine($"🔹 <b>{skill.Data.NameKR}</b> (Lv.{skill.Level})");
-                sb.AppendLine($"   - 타입: {skill.Data.Type} / 사거리: {skill.Data.Range}");
-                sb.AppendLine($"   - 현재 쿨타임: {skill.CurrentCooldown}s (기본: {skill.Data.Cooldown}s)");
-                foreach (var modifier in skill.Data.Skill_Modifiers)
+                sb.AppendLine($"🔹 <b>{skill._sourceSkill.Name}</b> (Lv.{skill.Level})");
+                sb.AppendLine($"   - 타입: {skill._sourceSkill.Type} / 사거리: {skill._sourceSkill.Range}");
+                sb.AppendLine($"   - 현재 쿨타임: {skill.CurrentCooldown}s (기본: {skill._sourceSkill.Cooldown}s)");
+                foreach (var modifier in skill._sourceSkill.Modifiers)
                 {
                     sb.AppendLine($"    - 스킬 Modifiers : {modifier}");
                 }
 
-                foreach (var action in skill.Data.Skill_Actions)
+                foreach (var action in skill._sourceSkill.Actions)
                 {
                     sb.AppendLine($"    - 스킬 Actions : {action}");
                 }
 
-                foreach (var effect in skill.Data.Status_Effects)
+                foreach (var effect in skill._sourceSkill.StatusEffects)
                 {
                     sb.AppendLine($"    -스킬 Status Effets : {effect}");
                 }
 
-                foreach (var trait in skill.Data.Traits)
+                foreach (var trait in skill._sourceSkill.Traits)
                 {
                     sb.AppendLine($"    -스킬  Traits : {trait}");
                 }

@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
+﻿using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public struct ResistanceFactor
@@ -13,6 +12,27 @@ public struct ResistanceFactor
 
 public class ResistanceManager : Singleton<ResistanceManager>
 {
+    
+    [TabGroup("Balance","Defense")] [ShowInInspector, ReadOnly]
+    private DefenseWeightData _defenseWeightData;
+
+    [TabGroup("Balance","Defense")]
+    [SerializeField,FolderPath]
+    private string defenseWeightDataResourcePath = "/SO/Balance";
+    
+    [TabGroup("Balance","Resistance")]
+    private Dictionary<DamageType,List<ResistanceFactor>> _resistanceRules = new Dictionary<DamageType, List<ResistanceFactor>>();
+
+    public override void Initialize()
+    {
+        LoadDefenseWeightData();
+    }
+
+    public void SetResistanceRules(Dictionary<DamageType, List<ResistanceFactor>> resistanceRules)
+    {
+        _resistanceRules = resistanceRules;
+    }
+    
     /// <summary>
     /// 단일 속성에 대한 저항력 계산
     /// </summary>
@@ -21,7 +41,7 @@ public class ResistanceManager : Singleton<ResistanceManager>
     /// <returns></returns>
     public float CalculateSingleResistance(BattleUnit defender, DamageType type)
     {
-        if (!DataManager.Instance.ResistanceRules.TryGetValue(type, out var formulas))
+        if (!_resistanceRules.TryGetValue(type, out var formulas))
         {
             return 0f; // 데미지 저항 공식이 없으면 True 데미지
         }
@@ -47,4 +67,13 @@ public class ResistanceManager : Singleton<ResistanceManager>
         return totalRes;
     }
     
+    private void LoadDefenseWeightData()
+    {
+        _defenseWeightData = Resources.Load<DefenseWeightData>(defenseWeightDataResourcePath);
+    }
+
+    public DefenseWeightData GetDefenseWeightData()
+    {
+        return _defenseWeightData;
+    }
 }

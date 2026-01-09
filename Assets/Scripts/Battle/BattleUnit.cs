@@ -161,10 +161,10 @@ public class BattleUnit
     // 자원 체크 및 소모
     // =============================================
     
-    public bool HasEnoughCost(SkillData data)
+    public bool HasEnoughCost(SkillSO skill)
     {
-        SkillResourceType resourceType = data.Resource_Type;
-        int skillResource = data.Resource;
+        SkillResourceType resourceType = skill.ResourceType;
+        int skillResource = skill.ResourceCost;
         return resourceType switch
         {
             SkillResourceType.NONE => true,
@@ -176,10 +176,10 @@ public class BattleUnit
         };
     }
     
-    public void ConsumeCost(SkillData data)
+    public void ConsumeCost(SkillSO skill)
     {
-        SkillResourceType resourceType = data.Resource_Type;
-        int skillResource = data.Resource;
+        SkillResourceType resourceType = skill.ResourceType;
+        int skillResource = skill.ResourceCost;
 
         switch (resourceType)
         {

@@ -58,13 +58,6 @@ public enum AdventurerDefenseType
     Divine
 }
 
-public enum SkillRange
-{
-    Short,
-    Medium,
-    Long
-}
-
 public enum SkillType
 {
     ACTIVE,

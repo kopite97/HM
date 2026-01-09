@@ -88,7 +88,7 @@ public class SkillData
     public SkillTarget Target;
     public SkillResourceType Resource_Type;
     public int Resource;
-    public SkillRange Range;
+    public float Range;
     public DamageType Damage_Type;
     
     public SkillModifier[] Skill_Modifiers;

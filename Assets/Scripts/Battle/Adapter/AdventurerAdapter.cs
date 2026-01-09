@@ -65,7 +65,7 @@ public class AdventurerAdapter : IBattleEntity
 
     public float GetDefenseScore()
     {
-        return _adv.GetDefenseScore(DataManager.Instance.DefenseWeight);
+        return _adv.GetDefenseScore(ResistanceManager.Instance.GetDefenseWeightData());
     }
     
     public List<LearnedSkill> GetSkills()

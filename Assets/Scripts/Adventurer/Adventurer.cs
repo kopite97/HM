@@ -158,12 +158,13 @@ public class Adventurer
         _isDirtyDefense = false;
     }
     
-    public void LearnSkill(SkillData data, int level = 1)
+    public void LearnSkill(SkillSO skill, int level = 1)
     {
-        if (_skills.Exists(s => s.Data.ID == data.ID)) return;
-        _skills.Add(new LearnedSkill(data, level));
+        if (_skills.Exists(s => s._sourceSkill.ID == skill.ID)) return;
+        _skills.Add(new LearnedSkill(skill, level));
     }
     
+    /***
     public void AnalyzePreferredPosition(DefenseWeightData defenseData)
     {
         if (_skills.Count == 0) return;
@@ -177,11 +178,11 @@ public class Adventurer
         foreach (var skill in _skills)
         {
             // 액티브 스킬이 패시브보다 포지션 결정에 더 큰 영향을 미침 (가중치 2배)
-            float typeWeight = (skill.Data.Type == SkillType.ACTIVE) ? 2.0f : 1.0f;
+            float typeWeight = (skill._sourceSkill.Type == SkillType.ACTIVE) ? 2.0f : 1.0f;
         
             // 사거리별 기본 점수 (Short일수록 높은 점수 부여)
-            float rangeBase = (skill.Data.Range == SkillRange.Short) ? 10f : 
-                (skill.Data.Range == SkillRange.Medium) ? 5f : 0f;
+            float rangeBase = (skill._sourceSkill.Range == SkillRange.Short) ? 10f : 
+                (skill._sourceSkill.Range == SkillRange.Medium) ? 5f : 0f;
 
             // 공식: (사거리 점수 * 스킬 레벨 * 타입 가중치)
             totalRangeScore += rangeBase * skill.Level * typeWeight;
@@ -205,6 +206,7 @@ public class Adventurer
             PreferredPosition = (defScore >= 180f) ? PartyPosition.All : PartyPosition.Rearguard;
         }
     }
+    ***/
 
     public float GetNature(NatureType type)
     {

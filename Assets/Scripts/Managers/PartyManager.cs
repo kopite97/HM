@@ -36,7 +36,7 @@ public class PartyManager : Singleton<PartyManager>
         // 1. 고정되지 않은(자유로운) 멤버들만 추출하여 방어 점수순 정렬
         var freeMembers = members
             .Where(m => !m.IsPositionLocked)
-            .OrderByDescending(m => m.GetDefenseScore(DataManager.Instance.DefenseWeight))
+            .OrderByDescending(m => m.GetDefenseScore(ResistanceManager.Instance.GetDefenseWeightData()))
             .ToList();
 
         if (freeMembers.Count == 0) return; // 배치할 사람이 없으면 종료

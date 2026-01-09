@@ -68,4 +68,10 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {
         _isQuitting = true;
     }
+
+    public virtual void Initialize()
+    {
+        
+    }
+
 }

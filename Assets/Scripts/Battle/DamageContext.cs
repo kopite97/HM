@@ -42,7 +42,7 @@ public class DamageContext
         Skill = skill;
         Env = env;
 
-        CurrentDamageType = skill.Data.Damage_Type;
+        CurrentDamageType = skill._sourceSkill.DamageType;
         //IsHeal = (skill.Data.SkillProperty == SkillModifier.HEAL);
         TotalMultiplier = 1.0f;
     }

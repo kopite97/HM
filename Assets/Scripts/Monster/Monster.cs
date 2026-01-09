@@ -38,11 +38,11 @@ public class Monster
         DefenseScore = data.DefenseScore;
         Desc = data.Desc;
 
-        var skillDataDict = DataManager.Instance.SkillDict;
+        var skillDict = SkillManager.Instance.GetSkillDictionary();
 
         foreach (var skillId in data.Skill_List)
         {
-            SkillData skillData = skillDataDict[skillId];
+            SkillSO skillData = skillDict[skillId];
             LearnedSkill skill = new LearnedSkill(skillData);
             _skills.Add(skill);
         }

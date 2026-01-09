@@ -30,77 +30,87 @@ public class SkillSO : SerializedScriptableObject
    [Title("Synced Data (From CSV)", "게임 시작 시 자동으로 덮어씌워집니다")]
    
    [TabGroup("Sync", "Basic Info")]
-   [ReadOnly] public string skillName;
+   [ReadOnly] public string Name;
     
    [TabGroup("Sync", "Basic Info")]
-   [ReadOnly, TextArea(4, 10)] public string description;
+   [ReadOnly, TextArea(4, 10)] public string Description;
 
    [TabGroup("Sync", "Combat Stats")]
-   [ReadOnly] public SkillType type;
+   [ReadOnly] public SkillType Type;
     
    [TabGroup("Sync", "Combat Stats")]
-   [ReadOnly] public SkillTarget target;
+   [ReadOnly] public SkillTarget Target;
     
    [TabGroup("Sync", "Combat Stats")]
-   [ReadOnly] public DamageType damageType;
+   [ReadOnly] public DamageType DamageType;
 
    [TabGroup("Sync", "Combat Stats")]
-   [ReadOnly, SuffixLabel("sec")] public float cooldown;
+   [ReadOnly, SuffixLabel("sec")] public float Cooldown;
 
    [TabGroup("Sync", "Resource")]
-   [ReadOnly] public SkillResourceType resourceType;
+   [ReadOnly] public SkillResourceType ResourceType;
     
    [TabGroup("Sync", "Resource")]
-   [ReadOnly] public int resourceCost;
+   [ReadOnly] public int ResourceCost;
+
+   [TabGroup("Sync", "Combat Stats")] [ReadOnly]
+   public float Range;
 
    // 복잡한 배열 데이터는 접이식 그룹으로 관리
    [TabGroup("Sync", "Details")]
    [FoldoutGroup("Sync/Details/Modifiers")]
-   [ReadOnly] public SkillModifier[] modifiers;
+   [ReadOnly]
+   public SkillModifier[] Modifiers;
+   
 
    [TabGroup("Sync", "Details")]
    [FoldoutGroup("Sync/Details/Actions")]
-   [ReadOnly] public SkillAction[] actions;
+   [ReadOnly] public SkillAction[] Actions;
 
    [TabGroup("Sync", "Details")]
    [FoldoutGroup("Sync/Details/Status Effects")]
-   [ReadOnly] public StatusEffect[] statusEffects;
+   [ReadOnly] public StatusEffect[] StatusEffects;
+   
+   [TabGroup("Sync", "Details")]
+   [FoldoutGroup("Sync/Details/Traits")]
+   [ReadOnly] public Trait[] Traits;
 
    [TabGroup("Sync", "Growth")]
    [LabelText("Base Stats (Lv.1)")]
-   [ReadOnly] public StatType[] baseStats;
+   [ReadOnly] public StatType[] BaseStats;
 
    [TabGroup("Sync", "Growth")]
    [LabelText("Power Coefs")]
    [InfoBox("데미지 계산 공식에 사용되는 계수입니다.")]
-   [ReadOnly] public float[] powerCoefs;
+   [ReadOnly] public float[] PowerCoefs;
 
    [TabGroup("Sync", "Growth")]
    [LabelText("Cooldown Reduction / Lv")]
-   [ReadOnly] public float cooldownReductionPerLv;
+   [ReadOnly] public float CooldownReductionPerLv;
 
    [TabGroup("Sync", "Growth")]
    [LabelText("Power Growth / Lv")]
-   [ReadOnly] public float[] powerGrowthPerLv;
-
+   [ReadOnly] public float[] PowerGrowthPerLv;
    public void SetData(SkillData data)
    {
-      skillName = data.NameKR; // TODO 나중에 언어 설정 바꾸기
-      description = data.DescKR; // TODO 얘도 바꾸기
-      type = data.Type;
-      target = data.Target;
-      damageType = data.Damage_Type;
-      cooldown = data.Cooldown;
-      resourceType = data.Resource_Type;
-      resourceCost = data.Resource;
+      Name = data.NameKR; // TODO 나중에 언어 설정 바꾸기
+      Description = data.DescKR; // TODO 얘도 바꾸기
+      Type = data.Type;
+      Target = data.Target;
+      DamageType = data.Damage_Type;
+      Cooldown = data.Cooldown;
+      ResourceType = data.Resource_Type;
+      ResourceCost = data.Resource;
+      Range = data.Range;
 
-      modifiers = data.Skill_Modifiers;
-      actions = data.Skill_Actions;
-      statusEffects = data.Status_Effects;
-      baseStats = data.Base_Stats;
-      powerCoefs = data.Power_Coefs;
+      Modifiers = data.Skill_Modifiers;
+      Actions = data.Skill_Actions;
+      StatusEffects = data.Status_Effects;
+      BaseStats = data.Base_Stats;
+      PowerCoefs = data.Power_Coefs;
+      Traits = data.Traits;
 
-      cooldownReductionPerLv = data.Cooldown_Reduction;
-      powerGrowthPerLv = data.Power_Growth;
+      CooldownReductionPerLv = data.Cooldown_Reduction;
+      PowerGrowthPerLv = data.Power_Growth;
    }
 }

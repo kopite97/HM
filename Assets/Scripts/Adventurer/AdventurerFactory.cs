@@ -27,12 +27,10 @@ public class AdventurerFactory : Singleton<AdventurerFactory>
     private int _statCount = 0;
     private float _theoreticalMaxTotal = 0;
 
-    private void Start()
+    
+    public override void Initialize()
     {
-        if (!_isInitialized && DataManager.Instance != null && DataManager.Instance.ClassDict.Count > 0)
-        {
-            InitializeStatCache();
-        }
+        InitializeStatCache();
     }
     
     private void InitializeStatCache()
@@ -73,7 +71,7 @@ public class AdventurerFactory : Singleton<AdventurerFactory>
         }
 
         // 실제 데이터 캐싱
-        foreach (var kvp in DataManager.Instance.ClassDict)
+        foreach (var kvp in AdventurerManager.Instance.GetClassDataDict())
         {
             int classId = kvp.Key;
             ClassData data = kvp.Value;
@@ -109,10 +107,11 @@ public class AdventurerFactory : Singleton<AdventurerFactory>
     {
         if (!_isInitialized) InitializeStatCache();
 
-        if (DataManager.Instance == null || !DataManager.Instance.ClassDict.ContainsKey(classID)) return null;
+        if (AdventurerManager.Instance.ContainsKey(classID)) return null;
         if (!_statWeightCache.ContainsKey(classID) || !_natureWeightCache.ContainsKey(classID)) return null;
 
-        ClassData data = DataManager.Instance.ClassDict[classID];
+        ClassData data = AdventurerManager.Instance.GetClassData(classID);
+        
 
         int age = Random.Range(15, 66);
         string name = "모험가_" + Random.Range(1000, 9999);
@@ -133,11 +132,12 @@ public class AdventurerFactory : Singleton<AdventurerFactory>
         else if (classID == 1002) skillIdToLearn = 3001; // 마법사 -> 화염구
         else skillIdToLearn = 2003; // 그 외 -> 단검 투척(예시)
 
-        if (DataManager.Instance.SkillDict.TryGetValue(skillIdToLearn, out SkillData skillData))
+       
+        if (SkillManager.Instance.TryGetSkill(skillIdToLearn,out SkillSO skill))
         {
             // 스킬 습득 (기본 1레벨)
-            newAdv.LearnSkill(skillData, 1);
-            Debug.Log($"[Factory] {newAdv.Name}에게 스킬 부여 완료: {skillData.NameKR}");
+            newAdv.LearnSkill(skill, 1);
+            Debug.Log($"[Factory] {newAdv.Name}에게 스킬 부여 완료: {skill.Name}");
         }
         else
         {
@@ -145,19 +145,10 @@ public class AdventurerFactory : Singleton<AdventurerFactory>
         }
 
         // 스킬 습득 후 포지션 분석
-        newAdv.AnalyzePreferredPosition(DataManager.Instance.DefenseWeight);
+        //newAdv.AnalyzePreferredPosition(DataManager.Instance.DefenseWeight);
         return newAdv;
     }
-
-    private SkillRange GetJobMainRange(int classID)
-    {
-        // 일단은 임시로.. 
-        // 추후에 SKillData에서 가져올 예정
-        if (classID == 1001) return SkillRange.Short; // 전사
-        if (classID == 1002) return SkillRange.Long;  // 마법사
-        return SkillRange.Medium;
-    }
-
+    
     private void DistributeStats(Adventurer adv, ClassData data, int totalPot, int age)
         {
         if (!_statWeightCache.TryGetValue(data.ID, out var jobWeights)) return;

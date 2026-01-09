@@ -7,16 +7,15 @@ using UnityEngine;
 
 public class DataManager : Singleton<DataManager>
 {
-    public Dictionary<int, ClassData> ClassDict = new Dictionary<int, ClassData>();
-    [Header("Game Settings")] public DefenseWeightData DefenseWeight;
-    public Dictionary<int, SkillData> SkillDict = new Dictionary<int, SkillData>();
-    public Dictionary<int, MonsterData> MonsterDict = new Dictionary<int, MonsterData>();
+    private Dictionary<int, ClassData> ClassDict = new Dictionary<int, ClassData>();
+    private Dictionary<int, SkillData> SkillDict = new Dictionary<int, SkillData>();
+    private Dictionary<int, MonsterData> MonsterDict = new Dictionary<int, MonsterData>();
 
-    public Dictionary<DamageType, List<ResistanceFactor>> ResistanceRules =
+    private Dictionary<DamageType, List<ResistanceFactor>> ResistanceRules =
         new Dictionary<DamageType, List<ResistanceFactor>>();
 
-    public Dictionary<int, EffectConfigData> EffectConfigDict = new Dictionary<int, EffectConfigData>();
-    public Dictionary<int, PropertyConfigData> PropertyConfigDict = new Dictionary<int, PropertyConfigData>();
+    private Dictionary<int, EffectConfigData> EffectConfigDict = new Dictionary<int, EffectConfigData>();
+    private Dictionary<int, PropertyConfigData> PropertyConfigDict = new Dictionary<int, PropertyConfigData>();
 
 
     private void Awake()
@@ -38,16 +37,19 @@ public class DataManager : Singleton<DataManager>
     private void LoadClassData()
     {
         LoadData("ClassData", ClassDict);
+        AdventurerManager.Instance.SetClassData(ClassDict);
     }
 
     private void LoadSkillData()
     {
         LoadData("SkillData", SkillDict);
+        SkillManager.Instance.SetAllSkillData(SkillDict);
     }
 
     private void LoadMonsterData()
     {
         LoadData("MonsterData",MonsterDict);
+        // TODO : MonsterManager에 set
     }
 
     private void LoadResistanceData()
@@ -105,6 +107,7 @@ public class DataManager : Singleton<DataManager>
         }
 
         Debug.Log($"✅ [ResistanceData] 총 {ResistanceRules.Count}개 속성의 저항 공식 로드 완료.");
+        ResistanceManager.Instance.SetResistanceRules(ResistanceRules);
     }
 
     private void LoadEffectConfig()
