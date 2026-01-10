@@ -34,7 +34,7 @@ public class Monster
         Name = data.NameKR;
         Level = data.Level;
         MaxHP = data.MaxHP;
-        
+  
         DefenseScore = data.DefenseScore;
         Desc = data.Desc;
 

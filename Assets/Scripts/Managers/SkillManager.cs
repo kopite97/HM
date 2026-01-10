@@ -11,9 +11,14 @@ public class SkillManager : Singleton<SkillManager>
 
     [Title("Settings")] [SerializeField, FolderPath]
     private string resourcePath = "/SO/Skill";
-    
 
-    public void SetAllSkillData(Dictionary<int,SkillData> skillCSVDatas)
+    public override void Initialize()
+    {
+        SetAllSkillData(DataManager.Instance.GetSkillDict());
+    }
+
+
+    private void SetAllSkillData(Dictionary<int,SkillData> skillCSVDatas)
     {
         _skillDict.Clear();
         

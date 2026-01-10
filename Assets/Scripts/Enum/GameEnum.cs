@@ -8,7 +8,7 @@ public enum StatType
     // [Body]
     Body_Might, Body_Endurance, Body_Reflex, Body_Poise, Body_Mobility, Body_Vitality,
     // [Mind]
-    Mind_Valor, Mind_Composure, Mind_Focus, Mind_Judgment, Mind_Resolve, Mind_Insight, Mind_Awareness, Mind_Command,
+    Mind_Valor, Mind_Composure, Mind_Focus, Mind_Intuition, Mind_Resolve, Mind_Insight, Mind_Awareness, Mind_Command,
     // [Tech]
     Tech_Arms, Tech_Archery, Tech_Sorcery, Tech_Faith, Tech_Subtlety, Tech_Guarding
 }

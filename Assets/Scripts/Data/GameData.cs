@@ -17,7 +17,7 @@ public class ClassData
     
     // 가중치 (Weights)
     public float W_Body_Might, W_Body_Endurance, W_Body_Reflex, W_Body_Poise, W_Body_Mobility, W_Body_Vitality;
-    public float W_Mind_Valor, W_Mind_Composure, W_Mind_Focus, W_Mind_Judgment, W_Mind_Resolve, W_Mind_Insight, W_Mind_Awareness, W_Mind_Command;
+    public float W_Mind_Valor, W_Mind_Composure, W_Mind_Focus, W_Mind_Intuition, W_Mind_Resolve, W_Mind_Insight, W_Mind_Awareness, W_Mind_Command;
     public float W_Tech_Arms, W_Tech_Archery, W_Tech_Sorcery, W_Tech_Faith, W_Tech_Subtlety, W_Tech_Guarding;
     
     // 성격 가중치 
@@ -52,7 +52,7 @@ public class MonsterData
     public float Mind_Valor;
     public float Mind_Composure;
     public float Mind_Focus;
-    public float Mind_Judgment;
+    public float Mind_Intuition;
     public float Mind_Resolve;
     public float Mind_Insight;
     public float Mind_Awareness;

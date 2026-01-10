@@ -11,11 +11,10 @@ public class AdventurerManager : Singleton<AdventurerManager>
     [Title("All Adventurers")]
     [ShowInInspector,ReadOnly]
     private Dictionary<int,Adventurer> _adventurers = new Dictionary<int, Adventurer>();
-    
-
 
     public override void Initialize()
     {
+        _classDataDict = DataManager.Instance.GetClassDict();
         AdventurerFactory.Instance.Initialize();
     }
 
@@ -38,11 +37,4 @@ public class AdventurerManager : Singleton<AdventurerManager>
     {
         return _adventurers.TryGetValue(id,out Adventurer adventurer) ? adventurer : null;
     }
-    
-    
-    public void SetClassData(Dictionary<int, ClassData> loadedData)
-    {
-        _classDataDict = loadedData;
-    }
-    
 }

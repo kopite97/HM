@@ -132,7 +132,7 @@ public class BattleManager : Singleton<BattleManager>
 
         yield return new WaitForSeconds(0.5f);
 
-        CheckBattleEnd();
+        CheckBattleEnd();    
         _isProcessingTurn = false;
     }
     

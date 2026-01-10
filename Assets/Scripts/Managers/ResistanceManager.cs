@@ -26,11 +26,7 @@ public class ResistanceManager : Singleton<ResistanceManager>
     public override void Initialize()
     {
         LoadDefenseWeightData();
-    }
-
-    public void SetResistanceRules(Dictionary<DamageType, List<ResistanceFactor>> resistanceRules)
-    {
-        _resistanceRules = resistanceRules;
+        _resistanceRules = DataManager.Instance.GetResistanceRules();
     }
     
     /// <summary>

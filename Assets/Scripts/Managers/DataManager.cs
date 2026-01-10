@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
-// 리플렉션 사용을 위해 필요
-
 public class DataManager : Singleton<DataManager>
 {
     private Dictionary<int, ClassData> ClassDict = new Dictionary<int, ClassData>();
@@ -17,6 +15,11 @@ public class DataManager : Singleton<DataManager>
     private Dictionary<int, EffectConfigData> EffectConfigDict = new Dictionary<int, EffectConfigData>();
     private Dictionary<int, PropertyConfigData> PropertyConfigDict = new Dictionary<int, PropertyConfigData>();
 
+    //[Manager]클래스 에서만 사용 
+    public Dictionary<int,ClassData> GetClassDict() => ClassDict;
+    public Dictionary<int, SkillData> GetSkillDict() => SkillDict;
+    public Dictionary<int, MonsterData> GetMonsterDict() => MonsterDict;
+    public Dictionary<DamageType, List<ResistanceFactor>> GetResistanceRules() => ResistanceRules;
 
     private void Awake()
     {
@@ -37,13 +40,11 @@ public class DataManager : Singleton<DataManager>
     private void LoadClassData()
     {
         LoadData("ClassData", ClassDict);
-        AdventurerManager.Instance.SetClassData(ClassDict);
     }
 
     private void LoadSkillData()
     {
         LoadData("SkillData", SkillDict);
-        SkillManager.Instance.SetAllSkillData(SkillDict);
     }
 
     private void LoadMonsterData()
@@ -107,7 +108,6 @@ public class DataManager : Singleton<DataManager>
         }
 
         Debug.Log($"✅ [ResistanceData] 총 {ResistanceRules.Count}개 속성의 저항 공식 로드 완료.");
-        ResistanceManager.Instance.SetResistanceRules(ResistanceRules);
     }
 
     private void LoadEffectConfig()
