@@ -35,32 +35,10 @@ public class ResistanceManager : Singleton<ResistanceManager>
     /// <param name="defender"></param>
     /// <param name="???"></param>
     /// <returns></returns>
-    public float CalculateSingleResistance(BattleUnit defender, DamageType type)
+    public float CalculateSingleResistance()
     {
-        if (!_resistanceRules.TryGetValue(type, out var formulas))
-        {
-            return 0f; // 데미지 저항 공식이 없으면 True 데미지
-        }
 
-        float totalRes = 0f;
-        
-        // 정의된 공식대로 스탯 합산
-        foreach (var factor in formulas)
-        {
-            float statValue = 0f;
-            if (factor.IsNature)
-            {
-                statValue = defender.GetNatureStat(factor.Nature);
-            }
-            else
-            {
-                statValue = defender.GetStat(factor.Stat);
-            }
-
-            totalRes += statValue * factor.Coefficient;
-        }
-
-        return totalRes;
+        return 0;
     }
     
     private void LoadDefenseWeightData()

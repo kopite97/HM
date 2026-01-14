@@ -26,6 +26,7 @@ public class AdventurerFactory : Singleton<AdventurerFactory>
 
     private int _statCount = 0;
     private float _theoreticalMaxTotal = 0;
+    private int _adventurerCount = 0;
 
     
     public override void Initialize()
@@ -115,7 +116,7 @@ public class AdventurerFactory : Singleton<AdventurerFactory>
 
         int age = Random.Range(15, 66);
         string name = "모험가_" + Random.Range(1000, 9999);
-        Adventurer newAdv = new Adventurer(name, age, data.ID);
+        Adventurer newAdv = new Adventurer(_adventurerCount++,name, age, data.ID);
         newAdv.SetJobName(data.Name_KR);
         
         int totalPot = RollTotalPotential();
@@ -125,7 +126,7 @@ public class AdventurerFactory : Singleton<AdventurerFactory>
         DistributeStats(newAdv, data, totalPot, age);
         
         // [테스트용 스킬 부여 로직]
-        // 나중에는 ClassData.MainSkillID를 참조하게 바꿀 것입니다.
+        // 나중에는 ClassData.MainSkillID를 참조하게 바꿀 것
         int skillIdToLearn = 0;
     
         if (classID == 1001) skillIdToLearn = 1001; // 전사 -> 강격

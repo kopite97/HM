@@ -10,8 +10,10 @@ public class AdventurerAdapter : IBattleEntity
     {
         _adv = adv;
     }
-    
+
+    public int InstanceID => _adv.InstanceID;
     public string Name => _adv.Name;
+    public int AffiliationID => _adv.AffiliationID;
     public int Level => 1; // TODO 모험가 레벨 연동
     public PartyPosition Position => _adv.AssignedPosition;
     
@@ -67,7 +69,17 @@ public class AdventurerAdapter : IBattleEntity
     {
         return _adv.GetDefenseScore(ResistanceManager.Instance.GetDefenseWeightData());
     }
-    
+
+    public float GetRecoveryTimer()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public float GetThinkTimer()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public List<LearnedSkill> GetSkills()
     {
         List<LearnedSkill> skills = new List<LearnedSkill>();

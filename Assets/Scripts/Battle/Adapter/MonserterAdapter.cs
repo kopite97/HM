@@ -11,7 +11,9 @@ public class MonsterAdapter : IBattleEntity
         
     }
 
+    public int InstanceID => _mon.InstanceID;
     public string Name => _mon.Name;
+    public int AffiliationID => _mon.AffiliationID;
     public int Level => _mon.Level;
     public PartyPosition Position => _mon.StartPosition;
     
@@ -76,6 +78,16 @@ public class MonsterAdapter : IBattleEntity
     public float GetDefenseScore()
     {
         return _mon.DefenseScore;
+    }
+
+    public float GetRecoveryTimer()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public float GetThinkTimer()
+    {
+        throw new System.NotImplementedException();
     }
 
     public List<LearnedSkill> GetSkills()

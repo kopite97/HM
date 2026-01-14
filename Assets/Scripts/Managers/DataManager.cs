@@ -50,7 +50,6 @@ public class DataManager : Singleton<DataManager>
     private void LoadMonsterData()
     {
         LoadData("MonsterData",MonsterDict);
-        // TODO : MonsterManager에 set
     }
 
     private void LoadResistanceData()

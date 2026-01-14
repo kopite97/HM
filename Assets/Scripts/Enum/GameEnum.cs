@@ -66,17 +66,9 @@ public enum SkillType
 
 public enum SkillTarget
 {
-    ENEMY_SINGLE,
-    ENEMY_AREA,
-    ENEMY_ALL,
-    ENEMY_RANDOM,
-    
-    ALLY_SINGLE,
-    ALLY_AREA,
-    ALLY_ALL,
-    ALLY_RANDOM,
-    
-    SELF
+    ENEMY,
+    ALLY,
+    SELF,
 }
 
 public enum SkillResourceType
@@ -242,6 +234,14 @@ public enum BattleState
     InBattle,
     Win,
     Lose
+}
+
+public enum UnitState
+{
+    Idle,
+    Move,
+    Action,
+    Recovery
 }
 
 [System.Flags]

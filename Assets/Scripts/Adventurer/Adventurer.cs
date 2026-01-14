@@ -6,30 +6,37 @@ using System.Linq;
 public class Adventurer
 {
     // --- 기본 정보 ---
+    public int InstanceID;
     public string Name { get; private set; }
     public int Age { get; private set; }
     public int JobID { get; private set; }
+    public int AffiliationID { get; private set; }
     public string JobName { get; private set; }
     public int TotalPotential { get; private set; }
     public string PotentialGrade { get; private set; }
 
+    // 스킬 목록
     [SerializeField] 
     private List<LearnedSkill> _skills =  new List<LearnedSkill>();
     public IReadOnlyList<LearnedSkill> Skills => _skills;
     
     // --- 캐싱 및 더티 플래그 ---
+    // 현재 능력치
     [SerializeField] private float _currentAbility;
     private bool _isDirtyAbility = true;
 
+    // 적응형 방어력 점수
     [SerializeField] private float _cachedDefenseScore;
     [SerializeField] private AdventurerDefenseType _cachedDefenseType;
     private bool _isDirtyDefense = true;
     
+    // 스탯 및 성격
     private Dictionary<StatType, float> _stats = new Dictionary<StatType, float>();
     private Dictionary<NatureType, float> _natures = new Dictionary<NatureType, float>();
     public IReadOnlyDictionary<StatType, float> Stats => _stats;
     public IReadOnlyDictionary<NatureType, float> Natures => _natures;
 
+    // 파티 포지션
     public PartyPosition PreferredPosition { get; private set; } = PartyPosition.None;
     public PartyPosition AssignedPosition { get; private set; } = PartyPosition.None;
 
@@ -43,8 +50,9 @@ public class Adventurer
     // 포지션 잠금
     public bool IsPositionLocked { get; private set; } = false;
 
-    public Adventurer(string name, int age, int jobId)
+    public Adventurer(int instanceID,string name, int age, int jobId)
     {
+        InstanceID = instanceID;
         Name = name;
         Age = age;
         JobID = jobId;
@@ -160,7 +168,7 @@ public class Adventurer
     
     public void LearnSkill(SkillSO skill, int level = 1)
     {
-        if (_skills.Exists(s => s._sourceSkill.ID == skill.ID)) return;
+        if (_skills.Exists(s => s.SourceSkill.ID == skill.ID)) return;
         _skills.Add(new LearnedSkill(skill, level));
     }
     

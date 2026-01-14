@@ -86,17 +86,22 @@ public class SkillData
     public string NameKR;
     public SkillType Type;
     public SkillTarget Target;
+    public int Target_Count;
     public SkillResourceType Resource_Type;
-    public int Resource;
+    public float Resource;
     public float Range;
     public DamageType Damage_Type;
     
     public SkillModifier[] Skill_Modifiers;
+    public float[] Modifiers_Value;
     public SkillAction[] Skill_Actions;
+    public float[] Actions_Value;
     public StatusEffect[] Status_Effects;
+    public float[] Effects_Value;
     public Trait[] Traits;
         
     // 레벨 1 기준 기본값 
+    public float Damage;
     public int Cooldown;
     public StatType[] Base_Stats; 
     public float[] Power_Coefs;   // [예: 1.5, 0.8]

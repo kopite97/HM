@@ -5,11 +5,13 @@ using UnityEngine;
 
 public class Monster
 {
-    public int ID { get; private set; }
+    public int InstanceID { get; private set; }
+    public int MonsterID { get; private set; }
     public string Name { get; private set; }
     public int Level { get; private set; }
     public float MaxHP { get; private set; }
     public float DefenseScore { get;private set; }
+    public int AffiliationID { get; private set; }
     private string Desc;
     
     public PartyPosition StartPosition { get; private set; } // 배치된 위치
@@ -30,7 +32,7 @@ public class Monster
     /// <param name="position">이 몬스터가 배치될 위치</param>
     public Monster(MonsterData data)
     {
-        ID = data.ID;
+        MonsterID = data.ID;
         Name = data.NameKR;
         Level = data.Level;
         MaxHP = data.MaxHP;
